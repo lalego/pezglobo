@@ -1,0 +1,195 @@
+<meta charset="UTF-8">
+<html>
+<head>
+<!--<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">-->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1">
+	<title>Pez Globo</title>	
+
+	<style type="text/css">
+
+		/* Remove margins and HTML scrollbars */
+		BODY, HTML  {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+	</style>
+
+	<script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
+	<script src="Background.js"></script>
+	<script src="Van.js"></script>
+
+	<script>
+		var stage, content;
+		var bg, van;
+		var calculatedWidth,calculatedHeight,centerWidth,centerHeight;
+		var scale;
+		var orientationStr, size;
+
+		// Resize event listener
+		window.addEventListener('resize', resize, false);
+		window.addEventListener('checkOrientation', resize, false);
+
+		/**
+		 * Init handler
+		 */
+		function init() 
+		{
+			stage = new createjs.Stage("demoCanvas");
+			stage.enableMouseOver(10);
+			
+			content = new createjs.Container();
+			stage.addChild(content);
+			
+			setDimension();
+			
+			createContent();
+			
+			createjs.Ticker.addEventListener("tick", stage);
+		}
+		
+		function setDimension()
+		{
+			var screenWidth = window.innerWidth * window.devicePixelRatio;
+			var screenHeight = window.innerHeight * window.devicePixelRatio;
+			
+			if (screenWidth > screenHeight)
+			{
+				orientationStr = "Landscape";
+				
+				if (screenWidth >= 1920)
+				{
+					size = "large";
+					setImageSize(1920, 1280);
+				}
+				else if (screenWidth >= 1248)
+				{
+					size = "mediumBig";
+					setImageSize(1248, 832);
+				}
+				else if (screenWidth >= 960)
+				{
+					size = "medium";
+					setImageSize(960, 640);
+				}
+				else if (screenWidth >= 720)	
+				{
+					size = "smallMedium";
+					setImageSize(720, 480);
+				}
+				else
+				{
+					size = "small";
+					setImageSize(480, 320);
+				}
+			}
+			else
+			{
+				orientationStr = "Portrait";
+				
+				if (screenWidth >= 1240)
+				{
+					size = "large";
+					setImageSize(1240, 1860);
+				}
+				else if (screenWidth >= 832)
+				{
+					size = "mediumBig";
+					setImageSize(832, 1248);
+				}
+				else if (screenWidth >= 640)
+				{
+					size = "medium";
+					setImageSize(640, 960);
+				}
+				else if (screenWidth >= 480)	
+				{
+					size = "smallMedium";
+					setImageSize(480, 720);
+				}
+				else
+				{
+					size = "small";
+					setImageSize(320, 480);
+				}
+			}
+			
+			console.log(orientationStr);
+			console.log(size);
+		}
+		
+		function setImageSize(loadWidth, loadHeight)
+		{
+			calculatedWidth = loadWidth;
+			calculatedHeight = loadHeight;
+		}
+		
+		function createContent() 
+		{			
+			bg = new Background(orientationStr, size); 
+			content.addChild(bg);
+		}
+		
+		function createVan() 
+		{			
+			van = new Van(orientationStr, size); 
+			content.addChild(van);
+		}
+		
+		function resize(event) 
+		{
+			
+			resizeImage();
+			
+	    }
+		
+		function resizeImage() 
+		{
+			var lastSize = size;
+			var lastOrientation = orientationStr;
+			
+			setDimension();
+			
+			if (orientationStr != lastOrientation)
+			{
+				console.log("cambio orientacion");
+				
+				change();
+			}
+			else if (size != lastSize)
+			{
+				console.log("cambio tamaño");
+				
+				change();
+			}
+
+			handleImageLoad();
+		}
+		
+		function change() 
+		{
+			if(orientationStr == "Landscape")
+			{
+				bg.changeHorizontal();
+			}
+			else
+			{
+				bg.changeVertical();
+			}
+		}
+		
+		function tick() 
+		{
+			stage.update();
+		}
+	</script>
+	
+</head>
+
+<body onLoad="init();">
+	<canvas id="demoCanvas" width="500" height="600"  >
+		alternate content
+	</canvas>
+</body>
+
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+<!--<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">-->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+	<title>Pez Globo</title>	
+
+	<style type="text/css">
+
+		/* Remove margins and HTML scrollbars */
+		BODY, HTML  {
+			margin: 0;
+			padding: 5;
+			overflow-x: hidden;
+		}
+	</style>
+
+	<script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
+
+	<script>
+
+		var stage;
+		var bg, facebook, twitter, instangram, youtube, calabera;		
+		var content, verticalImg, horizontalImg, verticalDisplay, horizontalDisplay;
+		//var horizontalWidth, horizontalHeight, verticalWidth, verticalHeight;
+		var imageWidth,imageHeight,calculatedWidth,calculatedHeight;
+		var scale;
+		var orientationStr;
+
+		// Resize event listener
+		window.addEventListener('resize', resize, false);
+		window.addEventListener('checkOrientation', resize, false);
+
+		/**
+		 * Init handler
+		 */
+		function init() 
+		{
+			stage = new createjs.Stage("demoCanvas");
+			stage.enableMouseOver(10);
+			
+			//createBackground();
+			createContent();
+			createIcons();
+			
+			if (window.DeviceOrientationEvent) {
+			   console.log("We can listen for change in the device's orientation...");
+			} else {
+			   console.log("Not supported");
+			}
+			
+			createjs.Ticker.addEventListener("tick", stage);
+
+			//resize();
+		}
+		
+		/**
+		 * create and display the background (fullscreen)
+		 */
+		function createBackground() {
+			
+			bg = new createjs.Shape();		
+			stage.addChild(bg);
+
+		}
+
+		/**
+		 * create and display logo (top-right)
+		 */
+		function createIcons() {
+
+			var facebookBmp = new createjs.Bitmap("images/facebook.png").set({name: "facebook",
+			 cursor: "pointer", alpha:1});
+			facebook = new createjs.Container();
+			facebook.addChild(facebookBmp);
+			
+			facebook.addEventListener("mouseover", handleMouseover);
+			facebook.addEventListener("mouseout", handleMouseout);
+			facebook.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(facebook);
+			
+			var twitterBmp = new createjs.Bitmap("images/twitter.png").set({name: "twitter",
+			 cursor: "pointer", alpha:1});
+			twitter = new createjs.Container();
+			twitter.addChild(twitterBmp);
+			
+			twitter.addEventListener("mouseover", handleMouseover);
+			twitter.addEventListener("mouseout", handleMouseout);
+			twitter.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(twitter);
+			
+			var instangramBmp = new createjs.Bitmap("images/instangram.png").set({name: "instangram",
+			 cursor: "pointer", alpha:1});
+			instangram = new createjs.Container();
+			instangram.addChild(instangramBmp);
+			
+			instangram.addEventListener("mouseover", handleMouseover);
+			instangram.addEventListener("mouseout", handleMouseout);
+			instangram.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(instangram);
+			
+			var youtubeBmp = new createjs.Bitmap("images/youtube.png").set({name: "youtube",
+			 cursor: "pointer", alpha:1});
+			youtube = new createjs.Container();
+			youtube.addChild(youtubeBmp);
+			
+			youtube.addEventListener("mouseover", handleMouseover);
+			youtube.addEventListener("mouseout", handleMouseout);
+			youtube.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(youtube);
+			
+			var calaberaBmp = new createjs.Bitmap("images/calabera.png").set({name: "calabera",
+			 cursor: "pointer", alpha:1});
+			calabera = new createjs.Container();
+			calabera.addChild(calaberaBmp);
+			
+			calabera.addEventListener("mouseover", handleMouseover);
+			calabera.addEventListener("mouseout", handleMouseout);
+			
+			stage.addChild(calabera);
+		}
+		
+		 
+		/**
+		 * create content (centered)
+		 */
+		function createContent() 
+		{
+			content = new createjs.Container();
+			stage.addChild(content);
+			
+			content = new createjs.Container();
+			stage.addChild(content);
+			
+			horizontalImg = new Image();
+			horizontalImg.src = "images/horizontal.jpg";
+			horizontalImg.onload = handleHorizontalLoad;
+			
+			verticalImg = new Image();
+			verticalImg.src = "images/vertical.jpg";
+			verticalImg.onload = handleVerticalLoad;
+		}
+		
+		function handleHorizontalLoad() 
+		{
+			horizontalDisplay = new createjs.Bitmap(horizontalImg);
+			content.addChild(horizontalDisplay);
+			
+			calculatedWidth = horizontalDisplay.image.width;
+			calculatedHeight = horizontalDisplay.image.height;
+				
+			console.log("horizontalWidth: " + calculatedWidth);
+			console.log("horizontalHeight: " + calculatedHeight);
+			
+			if(window.innerWidth > window.innerHeight)
+			{
+				console.log("horizontal");
+				orientationStr = 'Landscape';
+				//content.visible = true;
+				//content.visible = false;
+				
+				handleImageLoad(content);
+			}
+		}
+		
+		function handleVerticalLoad() 
+		{
+			verticalDisplay = new createjs.Bitmap(verticalImg);
+			content.addChild(verticalDisplay);
+			
+			calculatedWidth = verticalDisplay.image.width;
+			calculatedHeight = verticalDisplay.image.height;
+				
+			console.log("verticalWidth: " + calculatedWidth);
+			console.log("verticalHeight: " + calculatedHeight);
+			
+			if(window.innerWidth < window.innerHeight)
+			{
+				console.log("vertical");
+				orientationStr = 'Portrait';
+				//content.visible = false;
+				//content.visible = true;
+				
+				handleImageLoad(content);
+			}
+		}
+		
+		function handleImageLoad(content) 
+		{
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+
+			scale = screenWidth / calculatedWidth;
+			
+			imageWidth = calculatedWidth * scale;
+			imageHeight = calculatedHeight * scale;
+			
+			console.log("imageWidth: " + imageWidth);
+			console.log("imageHeight: " + imageHeight);
+			console.log("screenWidth: " + screenWidth);
+			console.log("screenHeight: " + screenHeight);
+			console.log("scale: " + scale);
+			
+			content.scaleX = scale;
+			content.scaleY = scale;
+			
+			resizeIcons();
+			
+			stage.canvas.width = imageWidth;
+			stage.canvas.height = imageHeight;
+		}
+		
+		function handleMouseover(evt) 
+		{
+			console.log("type=" + evt.type + " target=" + evt.target.name + " currentTarget=" + evt.currentTarget.name);
+		}
+		
+		function handleMouseout(evt) 
+		{
+			console.log("type=" + evt.type + " target=" + evt.target.name + " currentTarget=" + evt.currentTarget.name);
+		}
+		
+		function handleMousedown(evt) 
+		{
+			console.log("type=" + evt.type + " target=" + evt.target.name + " currentTarget=" + evt.currentTarget.name);
+			var target = evt.target.name;
+
+			switch (target) {
+				case "facebook":
+					window.location = "https://www.facebook.com/PezGloboBeachBar";
+					break;
+				case "twitter":
+					window.location = "https://twitter.com/pezglobobb";
+					break;
+				case "instangram":
+					window.location = "https://instagram.com/pezglobobeachbar/";
+					break;
+				case "youtube":
+					window.location = "https://www.youtube.com/channel/UC8bt_Ie61WhJVWY6nNJFnpQ";
+					break;
+			}
+		}
+		
+		/**
+		 * Tick Handler
+		 */
+		function tick() 
+		{
+			stage.update();
+		}	
+
+		/**
+		 * Resize event handler
+		 */
+		function resize(event) 
+		{
+			//resizeBackground();
+			
+			resizeImage();
+			
+			//tick();
+	    }
+		
+		function resizeImage() 
+		{
+			if(window.innerWidth > window.innerHeight)
+			{
+				if(orientationStr == 'Portrait')
+				{
+					orientationStr = 'Landscape';
+					console.log("cambio a horizontal");
+					calculatedWidth = horizontalDisplay.image.width;
+					calculatedHeight = horizontalDisplay.image.height;
+					//content.visible = true;
+					//content.visible = false;
+					content.swapChildren(verticalDisplay,horizontalDisplay);
+				}
+				
+				handleImageLoad(content);
+			}
+			else
+			{
+				if(orientationStr == "Landscape")
+				{
+					orientationStr = 'Portrait';
+					console.log("cambio a vertical");
+					calculatedWidth = verticalDisplay.image.width;
+					calculatedHeight = verticalDisplay.image.height;
+					//content.visible = false;
+					//content.visible = true;
+					content.swapChildren(horizontalDisplay,verticalDisplay);
+				}
+				
+				handleImageLoad(content);
+			}
+		}
+		
+		function resizeIcons()
+		{
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+			
+			facebook.scaleX = scale;
+			facebook.scaleY = scale;
+			twitter.scaleX = scale;
+			twitter.scaleY = scale;
+			instangram.scaleX = scale;
+			instangram.scaleY = scale;
+			youtube.scaleX = scale;
+			youtube.scaleY = scale;
+			calabera.scaleX = scale;
+			calabera.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				facebook.x = 517 * scale;
+				facebook.y = 411 * scale;
+				facebook.rotation = 0;
+				twitter.x = 603 * scale;
+				twitter.y = 413 * scale;
+				twitter.rotation = 0;
+				instangram.x = 688 * scale;
+				instangram.y = 417 * scale;
+				instangram.rotation = 0;
+				youtube.x = 774 * scale;
+				youtube.y = 417 * scale;
+				youtube.rotation = 0;
+				calabera.x = 638 * scale;
+				calabera.y = 491 * scale;
+				calabera.rotation = 0;
+			}
+			else
+			{
+				facebook.x = 276 * scale;
+				facebook.y = 281 * scale;
+				facebook.rotation = 9;
+				twitter.x = 353 * scale;
+				twitter.y = 293 * scale;
+				twitter.rotation = 9;
+				instangram.x = 430 * scale;
+				instangram.y = 309 * scale;
+				instangram.rotation = 8;
+				youtube.x = 509 * scale;
+				youtube.y = 318 * scale;
+				youtube.rotation = 8;
+				calabera.x = 375 * scale;
+				calabera.y = 371 * scale;
+				calabera.rotation = 10;
+			}
+		}
+		
+		function resizeBackground()
+		{
+			// Background: full screen redraw 
+	    	bg.graphics.clear()
+	    	bg.graphics.beginFill("#222").drawRect(0,0,stage.canvas.width,stage.canvas.height);
+		}
+
+	</script>
+</head>
+<body onLoad="init();">
+	<canvas id="demoCanvas" width="500" height="600"  >
+		alternate content
+	</canvas>
+</body>
+</html>

@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+<!--<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">-->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+	<title>Pez Globo</title>	
+
+	<style type="text/css">
+
+		/* Remove margins and HTML scrollbars */
+		BODY, HTML  {
+			margin: 0;
+			padding: 5;
+			overflow-x: hidden;
+		}
+	</style>
+
+	<script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
+
+	<script>
+
+		var stage;
+		var bg, facebook, facebookOver, twitter, twitterOver, instangram, instangramOver, youtube, youtubeOver, calabera;		
+		var content;
+		var smallHorizontal, mediumHorizontal, bigHorizontal, smallVertical, mediumVertical, bigVertical;
+		var imageWidth,imageHeight,calculatedWidth,calculatedHeight;
+		var scale;
+		var orientationStr, size;
+		var isTweening, calaveraTween;
+
+		// Resize event listener
+		window.addEventListener('resize', resize, false);
+		window.addEventListener('checkOrientation', resize, false);
+
+		/**
+		 * Init handler
+		 */
+		function init() 
+		{
+			angle = 0;
+			stage = new createjs.Stage("demoCanvas");
+			stage.enableMouseOver(10);
+			
+			//createBackground();
+			createContent();
+			createIcons();
+			
+			if (window.DeviceOrientationEvent) {
+			   console.log("We can listen for change in the device's orientation...");
+			} else {
+			   console.log("Not supported");
+			}
+			
+			isTweening = false;
+			
+			//calaveraTween = createjs.Tween.get(calabera).to({rotation:360}, 2000)
+			
+			createjs.Ticker.addEventListener("tick", stage);
+
+			//resize();
+		}
+		
+		/**
+		 * create and display the background (fullscreen)
+		 */
+		function createBackground() {
+			
+			bg = new createjs.Shape();		
+			stage.addChild(bg);
+
+		}
+
+		/**
+		 * create and display logo (top-right)
+		 */
+		function createIcons() {
+
+			var facebookBmp = new createjs.Bitmap("images/facebook.png").set({name: "facebook", cursor: "pointer"});
+			facebook = new createjs.Container();
+			facebook.addChild(facebookBmp);
+			
+			var facebookOverBmp = new createjs.Bitmap("images/facebookOver.png").set({name: "facebookOver", cursor: "pointer"});
+			facebookOver = new createjs.Container();
+			facebookOver.visible = false;
+			facebookOver.addChild(facebookOverBmp);
+			
+			stage.addChild(facebookOver);
+			
+			facebook.addEventListener("mouseover", handleMouseover);
+			facebook.addEventListener("mouseout", handleMouseout);
+			facebook.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(facebook);
+			
+			var twitterBmp = new createjs.Bitmap("images/twitter.png").set({name: "twitter", cursor: "pointer"});
+			twitter = new createjs.Container();
+			twitter.addChild(twitterBmp);
+			
+			var twitterOverBmp = new createjs.Bitmap("images/twitterOver.png").set({name: "twitterOver", cursor: "pointer"});
+			twitterOver = new createjs.Container();
+			twitterOver.visible = false;
+			twitterOver.addChild(twitterOverBmp);
+			
+			stage.addChild(twitterOver);
+			
+			twitter.addEventListener("mouseover", handleMouseover);
+			twitter.addEventListener("mouseout", handleMouseout);
+			twitter.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(twitter);
+			
+			var instangramBmp = new createjs.Bitmap("images/instangram.png").set({name: "instangram", cursor: "pointer"});
+			instangram = new createjs.Container();
+			instangram.addChild(instangramBmp);
+			
+			var instangramOverBmp = new createjs.Bitmap("images/instangramOver.png").set({name: "instangramOver", 
+				cursor: "pointer"});
+			instangramOver = new createjs.Container();
+			instangramOver.visible = false;
+			instangramOver.addChild(instangramOverBmp);
+			
+			stage.addChild(instangramOver);
+			
+			instangram.addEventListener("mouseover", handleMouseover);
+			instangram.addEventListener("mouseout", handleMouseout);
+			instangram.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(instangram);
+			
+			var youtubeBmp = new createjs.Bitmap("images/youtube.png").set({name: "youtube", cursor: "pointer"});
+			youtube = new createjs.Container();
+			youtube.addChild(youtubeBmp);
+			
+			var youtubeBmpOver = new createjs.Bitmap("images/youtubeOver.png").set({name: "youtubeOver", cursor: "pointer"});
+			youtubeOver = new createjs.Container();
+			youtubeOver.visible = false;
+			youtubeOver.addChild(youtubeBmpOver);
+			
+			stage.addChild(youtubeOver);
+			
+			youtube.addEventListener("mouseover", handleMouseover);
+			youtube.addEventListener("mouseout", handleMouseout);
+			youtube.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(youtube);
+			
+			var calaberaBmp = new createjs.Bitmap("images/calabera.png").set({name: "calabera", regX:23, regY:26,
+			 cursor: "pointer"});
+			calabera = new createjs.Container();
+			calabera.addChild(calaberaBmp);
+			
+			calabera.addEventListener("mouseover", handleMouseover);
+			calabera.addEventListener("mouseout", handleMouseout);
+			
+			stage.addChild(calabera);
+			
+			//calaveraTween = createjs.Tween.get(calabera,{paused:true}).to({rotation:360}, 2000).pause();
+		}
+		
+		 
+		/**
+		 * create content (centered)
+		 */
+		function createContent() 
+		{
+			content = new createjs.Container();
+			stage.addChild(content);
+			
+			var smallHorizontalImg = new Image();
+			smallHorizontalImg.src = "images/horizontal480x320.jpg";
+			smallHorizontalImg.onload = handleSmallHorizontalLoad;
+			
+			var smallVerticalImg = new Image();
+			smallVerticalImg.src = "images/vertical320x480.jpg";
+			smallVerticalImg.onload = handleSmallVerticalLoad;
+			
+			var mediumHorizontalImg = new Image();
+			mediumHorizontalImg.src = "images/horizontal960x640.jpg";
+			mediumHorizontalImg.onload = handleMediumHorizontalLoad;
+			
+			var mediumVerticalImg = new Image();
+			mediumVerticalImg.src = "images/vertical640x960.jpg";
+			mediumVerticalImg.onload = handleMediumVerticalLoad;
+			
+			var bigHorizontalImg = new Image();
+			bigHorizontalImg.src = "images/horizontal1920x1280.jpg";
+			bigHorizontalImg.onload = handleBigHorizontalLoad;
+			
+			var bigVerticalImg = new Image();
+			bigVerticalImg.src = "images/vertical1240x1860.jpg";
+			bigVerticalImg.onload = handleBigVerticalLoad;
+			
+			setDimension();
+		}
+		
+		function setDimension()
+		{
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+			
+			if (screenWidth > screenHeight)
+			{
+				orientationStr = "Landscape";
+				
+				if (screenWidth > 1920)
+				{
+					size = "large";
+					setImageSize(1920, 1280);
+				}
+				else if (screenWidth < 480)
+				{
+					size = "small";
+					setImageSize(480, 320);
+				}
+				else
+				{
+					size = "medium";
+					setImageSize(960, 640);
+				}
+			}
+			else
+			{
+				orientationStr = "Portrait";
+				
+				if (screenWidth > 1240)
+				{
+					size = "large";
+					setImageSize(1240, 1860);
+				}
+				else if (screenWidth < 320)
+				{
+					size = "small";
+					setImageSize(320, 480);
+				}
+				else
+				{
+					size = "medium";
+					setImageSize(640, 960);
+				}
+			}
+			
+			console.log(orientationStr);
+			console.log(size);
+		}
+		
+		function setImageSize(loadWidth, loadHeight)
+		{
+			calculatedWidth = loadWidth;
+			calculatedHeight = loadHeight;
+		}
+		
+		function handleSmallHorizontalLoad(event) 
+		{
+			smallHorizontal = new createjs.Bitmap(event.currentTarget);
+			
+			handleHorizontalLoad(smallHorizontal);
+		}
+		
+		function handleSmallVerticalLoad(event) 
+		{
+			smallVertical = new createjs.Bitmap(event.currentTarget);
+			
+			handleVerticalLoad(smallVertical);
+		}
+		
+		function handleMediumHorizontalLoad(event) 
+		{
+			mediumHorizontal = new createjs.Bitmap(event.currentTarget);
+			
+			handleHorizontalLoad(mediumHorizontal)
+		}
+		
+		function handleMediumVerticalLoad(event) 
+		{
+			mediumVertical = new createjs.Bitmap(event.currentTarget);
+			
+			handleVerticalLoad(mediumVertical)
+		}
+		
+		function handleBigHorizontalLoad(event) 
+		{
+			bigHorizontal = new createjs.Bitmap(event.currentTarget);
+			
+			handleHorizontalLoad(bigHorizontal)
+		}
+		
+		function handleBigVerticalLoad(event) 
+		{
+			bigVertical = new createjs.Bitmap(event.currentTarget);
+			
+			handleVerticalLoad(bigVertical)
+		}
+		
+		function handleHorizontalLoad(bitmap) 
+		{
+			var loadWidth = bitmap.image.width;
+			var loadHeight = bitmap.image.height;
+			
+			if(orientationStr == "Landscape" && loadWidth == calculatedWidth)
+			{
+				content.addChild(bitmap);
+				//content.visible = true;
+				//content.visible = false;
+				
+				handleImageLoad(content);
+			}
+		}
+		
+		function handleVerticalLoad(bitmap)  
+		{
+			var loadWidth = bitmap.image.width;
+			var loadHeight = bitmap.image.height;
+				
+			if(orientationStr == "Portrait" && loadWidth == calculatedWidth)
+			{
+				content.addChild(bitmap);
+				//content.visible = false;
+				//content.visible = true;
+				
+				handleImageLoad(content);
+			}
+		}
+		
+		function handleImageLoad(content) 
+		{
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+
+			scale = screenWidth / calculatedWidth;
+			
+			imageWidth = calculatedWidth * scale;
+			imageHeight = calculatedHeight * scale;
+			
+			console.log("imageWidth: " + imageWidth);
+			console.log("imageHeight: " + imageHeight);
+			console.log("screenWidth: " + screenWidth);
+			console.log("screenHeight: " + screenHeight);
+			console.log("scale: " + scale);
+			
+			content.scaleX = scale;
+			content.scaleY = scale;
+			
+			resizeIcons();
+			
+			stage.canvas.width = imageWidth;
+			stage.canvas.height = imageHeight;
+		}
+		
+		function handleMouseover(evt) 
+		{
+			console.log("type=" + evt.type + " target=" + evt.target.name + " currentTarget=" + evt.currentTarget.name);
+			var target = evt.target.name;
+			
+			switch (target) {
+				case "facebook":
+					facebookOver.visible = true;
+					break;
+				case "twitter":
+					twitterOver.visible = true;
+					break;
+				case "instangram":
+					instangramOver.visible = true;
+					break;
+				case "youtube":
+					youtubeOver.visible = true;
+					break;
+				case "calabera":
+					runTween();
+					facebookOver.visible = true;
+					twitterOver.visible = true;
+					instangramOver.visible = true;
+					youtubeOver.visible = true;
+					break;
+			}
+			
+			tick();
+		}
+		
+		function runTween()
+		{
+			var playing = createjs.Tween.hasActiveTweens(calabera);
+			console.log(playing);
+			if (!playing)
+			{
+				console.log("no playing");
+				//calaveraTween = createjs.Tween.get(calabera).to({rotation:360}, 2000);
+				//isTweening = true;
+				
+				//createjs.Tween.removeTweens(calabera);
+				
+				//createjs.Tween.get(calabera,{paused:true,},{override: true}).to({rotation:360}, 2000).call(handleComplete);
+				createjs.Tween.get(calabera,{override: true}).to({rotation:360}, 2000).call(handleComplete);	
+			}	
+			else
+			{
+				console.log("playing");
+			}
+			
+		}
+		
+		function handleComplete() 
+		{
+			console.log("Done...");
+			isTweening = true;
+			tick();
+		}
+		
+		function handleMouseout(evt) 
+		{
+			console.log("type=" + evt.type + " target=" + evt.target.name + " currentTarget=" + evt.currentTarget.name);
+			var target = evt.target.name;
+			
+			switch (target) {
+				case "facebook":
+					facebookOver.visible = false;
+					break;
+				case "twitter":
+					twitterOver.visible = false;
+					break;
+				case "instangram":
+					instangramOver.visible = false;
+					break;
+				case "youtube":
+					youtubeOver.visible = false;
+					break;
+				case "calabera":
+					facebookOver.visible = false;
+					twitterOver.visible = false;
+					instangramOver.visible = false;
+					youtubeOver.visible = false;
+					break;
+			}
+			
+			tick();
+		}
+		
+		function handleMousedown(evt) 
+		{
+			console.log("type=" + evt.type + " target=" + evt.target.name + " currentTarget=" + evt.currentTarget.name);
+			var target = evt.target.name;
+
+			switch (target) {
+				case "facebook":
+					window.location = "https://www.facebook.com/PezGloboBeachBar";
+					break;
+				case "twitter":
+					window.location = "https://twitter.com/pezglobobb";
+					break;
+				case "instangram":
+					window.location = "https://instagram.com/pezglobobeachbar/";
+					break;
+				case "youtube":
+					window.location = "https://www.youtube.com/channel/UC8bt_Ie61WhJVWY6nNJFnpQ";
+					break;
+			}
+		}
+		
+		/**
+		 * Tick Handler
+		 */
+		function tick() 
+		{
+			//angle += 1;
+			//var value = angle * 90;
+
+			//calabera.rotation = value;
+			stage.update();
+		}	
+
+		/**
+		 * Resize event handler
+		 */
+		function resize(event) 
+		{
+			//resizeBackground();
+			
+			resizeImage();
+			
+			//tick();
+	    }
+		
+		function resizeImage() 
+		{
+			var lastSize = size;
+			var lastOrientation = orientationStr;
+			
+			setDimension();
+			
+			if (orientationStr != lastOrientation)
+			{
+				console.log("cambio orientacion");
+				
+				change();
+			}
+			else if (size != lastSize)
+			{
+				console.log("cambio tamaño");
+				
+				change();
+			}
+		}
+		
+		function change() 
+		{
+			if(orientationStr == "Landscape")
+			{
+				changeHorizontal();
+			}
+			else
+			{
+				changeVertical();
+			}
+			
+			handleImageLoad(content);
+		}
+		
+		function changeHorizontal() 
+		{
+			content.removeChild(0);
+					
+			if (size == "small")
+			{
+				console.log("cambio a horizontal pequeño");
+				content.addChild(smallHorizontal);
+			}
+			else if (size == "medium")
+			{
+				console.log("cambio a horizontal medio");
+				content.addChild(mediumHorizontal);
+			}
+			else if (size == "big")
+			{
+				console.log("cambio a horizontal grande");
+				content.addChild(bigHorizontal);
+			}
+		}
+		
+		function changeVertical() 
+		{
+			content.removeChild(0);
+					
+			if (size == "small")
+			{
+				console.log("cambio a vertical pequeño");
+				content.addChild(smallVertical);
+			}
+			else if (size == "medium")
+			{
+				console.log("cambio a vertical medio");
+				content.addChild(mediumVertical);
+			}
+			else if (size == "big")
+			{
+				console.log("cambio a vertical grande");
+				content.addChild(bigVertical);
+			}
+		}
+		
+		function resizeIcons()
+		{
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+			
+			facebook.scaleX = scale;
+			facebookOver.scaleX = scale;
+			facebook.scaleY = scale;
+			facebookOver.scaleY = scale;
+			twitter.scaleX = scale;
+			twitterOver.scaleX = scale;
+			twitter.scaleY = scale;
+			twitterOver.scaleY = scale;
+			instangram.scaleX = scale;
+			instangramOver.scaleX = scale;
+			instangram.scaleY = scale;
+			instangramOver.scaleY = scale;
+			youtube.scaleX = scale;
+			youtubeOver.scaleX = scale;
+			youtube.scaleY = scale;
+			youtubeOver.scaleY = scale;
+			calabera.scaleX = scale;
+			calabera.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				facebook.x = 517 * scale;
+				facebook.y = 411 * scale;
+				facebookOver.x = 517 * scale;
+				facebookOver.y = 411 * scale;
+				facebook.rotation = 0;
+				facebookOver.rotation = 0;
+				twitter.x = 603 * scale;
+				twitter.y = 413 * scale;	
+				twitterOver.x = 603 * scale;
+				twitterOver.y = 413 * scale;
+				twitter.rotation = 0;
+				twitterOver.rotation = 0;
+				instangram.x = 688 * scale;
+				instangram.y = 417 * scale;
+				instangramOver.x = 688 * scale;
+				instangramOver.y = 417 * scale;
+				instangram.rotation = 0;
+				instangramOver.rotation = 0;
+				youtube.x = 774 * scale;
+				youtube.y = 417 * scale;
+				youtubeOver.x = 774 * scale;
+				youtubeOver.y = 417 * scale;
+				youtube.rotation = 0;
+				youtubeOver.rotation = 0;
+				calabera.x = 661 * scale;
+				calabera.y = 517 * scale;
+				calabera.rotation = 0;
+			}
+			else
+			{
+				facebook.x = 276 * scale;
+				facebook.y = 281 * scale;
+				facebookOver.x = 276 * scale;
+				facebookOver.y = 281 * scale;
+				facebook.rotation = 9;
+				facebookOver.rotation = 9;
+				twitter.x = 353 * scale;
+				twitter.y = 293 * scale;
+				twitterOver.x = 353 * scale;
+				twitterOver.y = 293 * scale;
+				twitter.rotation = 9;
+				instangram.x = 430 * scale;
+				instangram.y = 309 * scale;
+				instangramOver.x = 430 * scale;
+				instangramOver.y = 309 * scale;
+				instangram.rotation = 8;
+				instangramOver.rotation = 8;
+				youtube.x = 509 * scale;
+				youtube.y = 318 * scale;
+				youtubeOver.x = 509 * scale;
+				youtubeOver.y = 318 * scale;
+				youtube.rotation = 8;
+				youtubeOver.rotation = 8;
+				calabera.x = 398 * scale;
+				calabera.y = 397 * scale;
+				calabera.rotation = 10;
+			}
+		}
+		
+		function resizeBackground()
+		{
+			// Background: full screen redraw 
+	    	bg.graphics.clear()
+	    	bg.graphics.beginFill("#222").drawRect(0,0,stage.canvas.width,stage.canvas.height);
+		}
+
+	</script>
+</head>
+<body onLoad="init();">
+	<canvas id="demoCanvas" width="500" height="600"  >
+		alternate content
+	</canvas>
+</body>
+</html>

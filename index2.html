@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+<!--<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">-->
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+	<title>Pez Globo</title>	
+
+	<style type="text/css">
+
+		/* Remove margins and HTML scrollbars */
+		BODY, HTML  {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+	</style>
+
+	<script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
+
+	<script>
+
+		var stage;
+		var assets;
+		var bg, icons;		
+		var content, verticalImg, horizontalImg, verticalDisplay, horizontalDisplay;
+		var horizontalWidth, horizontalHeight, verticalWidth, verticalHeight;
+		var scale;
+		var orientation;
+
+		// Resize event listener
+		window.addEventListener('resize', resize, false);
+		window.addEventListener('checkOrientation', resize, false);
+
+		/**
+		 * Init handler
+		 */
+		function init() 
+		{
+			stage = new createjs.Stage("demoCanvas");
+			
+			createLoader();
+			
+			createjs.Ticker.addEventListener("tick", stage);
+
+			resize();
+		}
+		
+		function createLoader() 
+		{
+			assets = [];
+
+			manifest = [
+				{src: "images/horizontal.jpg", id: "horizontal"},
+				{src: "images/vertical.jpg", id: "vertical"},
+				{src: "images/icons.png", id: "icons"},
+			];
+			
+			var loader = new createjs.LoadQueue();
+			loader.on("fileload", handleFileLoad);
+			loader.on("complete", handleComplete);
+			loader.loadManifest(manifest);
+			//stage.autoClear = false;
+		}
+		
+		function handleFileLoad(event) {
+			assets.push(event);
+		}
+
+		function handleComplete() 
+		{
+			for (var i = 0; i < assets.length; i++) 
+			{
+				var event = assets[i];
+				var id = event.item.id;
+				var result = event.result;
+
+				switch (id) {
+					case "horizontal":
+						handleHorizontalLoad();
+						break;
+					case "vertical":
+						handleVerticalLoad();
+						break;
+					case "icons":
+						// Vertically offset the pattern fill by 1 to solve a Chrome bug on BitmapFills
+						createIcons();
+						break;
+				}
+			}
+		}
+		
+		/**
+		 * create and display the background (fullscreen)
+		 */
+		function createBackground() {
+			
+			bg = new createjs.Shape();		
+			stage.addChild(bg);
+
+		}
+
+		/**
+		 * create and display logo (top-right)
+		 */
+		function createIcons() {
+
+			icons = new createjs.Bitmap("images/icons.png");
+			stage.addChild(icons);
+		}
+		
+		 
+		/**
+		 * create content (centered)
+		 */
+		function createContent() 
+		{
+			content = new createjs.Container();
+			stage.addChild(content);
+			
+			horizontalImg = new Image();
+			horizontalImg.src = "images/horizontal.jpg";
+			horizontalImg.onload = handleHorizontalLoad;
+			
+			verticalImg = new Image();
+			verticalImg.src = "images/vertical.jpg";
+			verticalImg.onload = handleVerticalLoad;
+		}
+		
+		function handleHorizontalLoad() 
+		{
+			horizontalDisplay = new createjs.Bitmap(horizontalImg);
+			
+			horizontalWidth = horizontalDisplay.image.width;
+			horizontalHeight = horizontalDisplay.image.height;
+				
+			console.log("horizontalWidth: " + horizontalWidth);
+			console.log("horizontalHeight: " + horizontalHeight);
+			
+			if(window.innerWidth > window.innerHeight)
+			{
+				console.log("horizontal");
+				orientation = 'Landscape';
+				
+				handleImageLoad(horizontalDisplay, horizontalWidth, horizontalHeight);
+			}
+		}
+		
+		function handleVerticalLoad() 
+		{
+			verticalDisplay = new createjs.Bitmap(verticalImg);
+			
+			verticalWidth = verticalDisplay.image.width;
+			verticalHeight = verticalDisplay.image.height;
+				
+			console.log("verticalWidth: " + verticalWidth);
+			console.log("verticalHeight: " + verticalHeight);
+			
+			if(window.innerWidth < window.innerHeight)
+			{
+				console.log("vertical");
+				orientation = 'Portrait';
+				
+				handleImageLoad(verticalDisplay, verticalWidth, verticalHeight);
+			}
+		}
+		
+		function handleImageLoad(imageDisplay, imageWidth, imageHeight) 
+		{
+			var imgContent = content.getChildAt(0)
+			if (imgContent)
+			{
+				content.removeChildAt(0);
+			}
+			content.addChild(imageDisplay);	
+			
+			var screenWidth = window.innerWidth-10;
+			var screenHeight = window.innerHeight-10;
+
+			content.regX = imageWidth/2;
+			content.regY = imageHeight/2;
+			
+			console.log("imageWidth: " + imageWidth);
+			console.log("imageHeight: " + imageHeight);
+			console.log("screenWidth: " + screenWidth);
+			console.log("screenHeight: " + screenHeight);
+			
+			scale = Math.min(screenWidth / imageWidth, screenHeight / imageHeight);
+			console.log("scale: " + screenWidth / imageWidth);
+			
+			content.scaleX = scale;
+			content.scaleY = scale;
+			
+			// Content: centered
+	        content.x = (stage.canvas.width)/ 2;
+	        content.y = (stage.canvas.height)/ 2;
+		}
+		
+		function handleIconsLoad()
+		{
+		
+		}
+		
+		/**
+		 * Tick Handler
+		 */
+		function tick() 
+		{
+			stage.update();
+		}	
+
+		/**
+		 * Resize event handler
+		 */
+		function resize() 
+		{			
+			// Resize the canvas element
+		  	stage.canvas.width = window.innerWidth;
+	    	stage.canvas.height = window.innerHeight;
+			
+			var imgContent = content.getChildAt(0)
+			if (imgContent)
+			{
+				resizeImage();
+			}
+			
+			resizeIcons();
+			resizeBackground();
+	    }
+		
+		function resizeImage() 
+		{
+			if(window.innerWidth > window.innerHeight)
+			{
+				if(orientation == 'Portrait')
+				{
+					orientation = 'Landscape';
+					console.log("cambio a horizontal");
+					content.removeChildAt(0);
+				}
+				
+				handleImageLoad(horizontalDisplay, horizontalWidth, horizontalHeight);
+			}
+			else
+			{
+				if(orientation == "Landscape")
+				{
+					orientation = 'Portrait';
+					console.log("cambio a vertical");
+					content.removeChildAt(0);
+				}
+				
+				handleImageLoad(verticalDisplay, verticalWidth, verticalHeight);
+			}
+		}
+		
+		function resizeIcons()
+		{
+			// Logo: top-right position (canvasWidth - image width - 10 px padding)
+			icons.scaleX = scale;
+			icons.scaleY = scale;
+	    	icons.x = stage.canvas.width - content.width - 10;
+			icons.y = 10;
+		}
+		
+		function resizeBackground()
+		{
+			// Background: full screen redraw 
+	    	bg.graphics.clear()
+	    	bg.graphics.beginFill("#222").drawRect(0,0,stage.canvas.width,stage.canvas.height);
+		}
+
+	</script>
+</head>
+<body onLoad="init();">
+	<canvas id="demoCanvas" width="500" height="600"  >
+		alternate content
+	</canvas>
+</body>
+</html>

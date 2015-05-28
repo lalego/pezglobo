@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+<!--<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">-->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1">
+	<title>Pez Globo</title>	
+
+	<style type="text/css">
+
+		/* Remove margins and HTML scrollbars */
+		BODY, HTML  {
+			margin: 0;
+			padding: 5;
+			overflow-x: hidden;
+		}
+	</style>
+
+	<script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
+
+	<script>
+
+		var stage, bg;
+		var smallFacebook, smallMediumFacebook, mediumFacebook, mediumBigFacebook, bigFacebook;
+		var smallFacebookOver, smallMediumFacebookOver, mediumFacebookOver, mediumBigFacebookOver, bigFacebookOver;
+		var smallTwitter, smallMediumTwitter, mediumTwitter, mediumBigTwitter, bigTwitter;
+		var smallTwitterOver, smallMediumTwitterOver, mediumTwitterOver, mediumBigTwitterOver, bigTwitterOver;
+		var smallInstangram, smallMediumInstangram, mediumInstangram, mediumBigInstangram, bigInstangram;
+		var smallInstangramOver, smallMediumInstangramOver, mediumInstangramOver, mediumBigInstangramOver, bigInstangramOver;
+		var smallYoutube, smallMediumYoutube, mediumYoutube, mediumBigYoutube, bigYoutube;
+		var smallYoutubeOver, smallMediumYoutubeOver, mediumYoutubeOver, mediumBigYoutubeOver, bigYoutubeOver;
+		var smallCarabela, smallMediumCarabela, mediumCarabela, mediumBigCarabela, bigCarabela;
+		var content;
+		var smallHorizontal, smallMediumHorizontal, mediumHorizontal, mediumBigHorizontal, bigHorizontal;
+		var	smallVertical, smallMediumVertical, mediumVertical, mediumBigVertical, bigVertical;
+		var imageWidth,imageHeight,calculatedWidth,calculatedHeight;
+		var scale;
+		var orientationStr, size;
+		var isTweening, calaveraTween;
+
+		// Resize event listener
+		window.addEventListener('resize', resize, false);
+		window.addEventListener('checkOrientation', resize, false);
+
+		/**
+		 * Init handler
+		 */
+		function init() 
+		{
+			angle = 0;
+			stage = new createjs.Stage("demoCanvas");
+			stage.enableMouseOver(10);
+			
+			//createBackground();
+			createContent();
+			//createIcons();
+			
+			if (window.DeviceOrientationEvent) {
+			   console.log("We can listen for change in the device's orientation...");
+			} else {
+			   console.log("Not supported");
+			}
+			
+			isTweening = false;
+			
+			//calaveraTween = createjs.Tween.get(calabera).to({rotation:360}, 2000)
+			
+			createjs.Ticker.addEventListener("tick", stage);
+
+			//resize();
+		}
+		
+		/**
+		 * create and display the background (fullscreen)
+		 */
+		function createBackground() {
+			
+			bg = new createjs.Shape();		
+			stage.addChild(bg);
+
+		}
+
+		/**
+		 * create and display logo (top-right)
+		 */
+		function createIcons()
+		{
+			loadFacebook();
+			loadTwitter();
+			loadInstangram();
+			loadYoutube();
+			loadCarabela();
+			loadAddress();
+			loadRrd();
+			
+			if (size == "small")
+			{
+				console.log("iconos pequeños");
+				createButtons(smallFacebook, smallFacebookOver);
+				createButtons(smallTwitter, smallTwitterOver);
+				createButtons(smallInstangram, smallInstangramOver);
+				createButtons(smallYoutube, smallYoutubeOver);
+				createCalabera(smallCalabera);
+				createLink(address);
+				createLink(rrd);
+			}
+			else if (size == "smallMedium")
+			{
+				console.log("iconos medio pequeños");
+				createButtons(smallMediumFacebook, smallMediumFacebookOver);
+				createButtons(smallMediumTwitter, smallMediumTwitterOver);
+				createButtons(smallMediumInstangram, smallMediumInstangramOver);
+				createButtons(smallMediumYoutube, smallMediumYoutubeOver);
+				createCalabera(smallMediumCalabera);
+				createLink(address);
+				createLink(rrd);
+			}
+			else if (size == "medium")
+			{
+				console.log("iconos medios");
+				createButtons(mediumFacebook, mediumFacebookOver);
+				createButtons(mediumTwitter, mediumTwitterOver);
+				createButtons(mediumInstangram, mediumInstangramOver);
+				createButtons(mediumYoutube, mediumYoutubeOver);
+				createCalabera(mediumCalabera);
+				createLink(address);
+				createLink(rrd);
+			}
+			else if (size == "mediumBig")
+			{
+				console.log("iconos medio grandes");
+				//createButtons(mediumBigFacebook, mediumBigFacebookOver);
+				createButtonsa(mediumBigFacebook);
+				createButtons(mediumBigTwitter, mediumBigTwitterOver);
+				createButtons(mediumBigInstangram, mediumBigInstangramOver);
+				createButtons(mediumBigYoutube, mediumBigYoutubeOver);
+				createCalabera(mediumBigCalabera);
+				createLink(address);
+				createLink(rrd);
+			}
+			else if (size == "large")
+			{
+				console.log("iconos grandes");
+				createButtons(bigFacebook, bigFacebookOver);
+				createButtons(bigTwitter, bigTwitterOver);
+				createButtons(bigInstangram, bigInstangramOver);
+				createButtons(bigYoutube, bigYoutubeOver);
+				createCalabera(bigCalabera);
+				createLink(address);
+				createLink(rrd);
+			}
+		}
+		
+		function createButtons(bitmap,bitmapOver)
+		{
+			stage.addChild(bitmapOver);
+			
+			bitmap.addEventListener("mouseover", handleMouseover);
+			bitmap.addEventListener("mouseout", handleMouseout);
+			bitmap.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(bitmap);
+		}
+		
+		function createButtonsa(bitmap)
+		{
+			bitmap.addEventListener("mouseover", handleMouseover);
+			bitmap.addEventListener("mouseout", handleMouseout);
+			bitmap.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(bitmap);
+		}
+		
+		function createCalabera(bitmap)
+		{
+			bitmap.addEventListener("mouseover", handleMouseover);
+			bitmap.addEventListener("mouseout", handleMouseout);
+			
+			stage.addChild(bitmap);
+		}
+		
+		function createLink(bitmap)
+		{
+			bitmap.addEventListener("mousedown", handleMousedown);
+			
+			stage.addChild(bitmap);
+		}
+		
+		function loadFacebook()
+		{
+			var smallFacebookBmp = new createjs.Bitmap("images/facebook35x27.png").set({name: "smallFacebook", cursor: "pointer"});
+			smallFacebook = new createjs.Container();
+			
+			
+			var smallFacebookOverBmp = new createjs.Bitmap("images/facebookOver35x27.png").set({name: "smallFacebookOver", cursor: "pointer"});
+			smallFacebookOver = new createjs.Container();
+			smallFacebookOver.visible = false;
+			smallFacebook.addChild(smallFacebookBmp, smallFacebookOverBmp);
+			//smallFacebookOver.addChild(smallFacebookOverBmp);
+			
+			var smallMediumFacebookBmp = new createjs.Bitmap("images/facebook53x41.png").set({name: "smallMediumFacebook", cursor: "pointer"});
+			smallMediumFacebook = new createjs.Container();
+			smallMediumFacebook.addChild(smallMediumFacebookBmp);
+			
+			var smallMediumFacebookOverBmp = new createjs.Bitmap("images/facebookOver53x41.png").set({name: "smallMediumFacebookOver", cursor: "pointer"});
+			smallMediumFacebookOver = new createjs.Container();
+			smallMediumFacebookOver.visible = false;
+			smallMediumFacebookOver.addChild(smallMediumFacebookOverBmp);
+			
+			var mediumFacebookBmp = new createjs.Bitmap("images/facebook70x54.png").set({name: "mediumFacebook", cursor: "pointer"});
+			mediumFacebook = new createjs.Container();
+			mediumFacebook.addChild(mediumFacebookBmp);
+			
+			var mediumFacebookOverBmp = new createjs.Bitmap("images/facebookOver70x54.png").set({name: "mediumFacebookOver", cursor: "pointer"});
+			mediumFacebookOver = new createjs.Container();
+			mediumFacebookOver.visible = false;
+			mediumFacebookOver.addChild(mediumFacebookOverBmp);
+			
+			var mediumBigFacebookBmp = new createjs.Bitmap("images/facebook91x70.png").set({name: "mediumBigFacebook", cursor: "pointer"});
+			mediumBigFacebook = new createjs.Container();
+			
+			var mediumBigFacebookOverBmp = new createjs.Bitmap("images/facebookOver91x70.png").set({name: "mediumBigFacebookOver", cursor: "pointer"});
+			mediumBigFacebookOverBmp.visible = false;
+			
+			mediumBigFacebook.addChild(mediumBigFacebookBmp, mediumBigFacebookOverBmp);
+			//mediumBigFacebookOver = new createjs.Container();
+			//mediumBigFacebookOver.visible = false;
+			//mediumBigFacebookOver.addChild(mediumBigFacebookOverBmp);
+			
+			var bigFacebookBmp = new createjs.Bitmap("images/facebook140x108.png").set({name: "bigFacebook", cursor: "pointer"});
+			bigFacebook = new createjs.Container();
+			bigFacebook.addChild(bigFacebookBmp);
+			
+			var bigFacebookOverBmp = new createjs.Bitmap("images/facebookOver140x108.png").set({name: "bigFacebookOver", cursor: "pointer"});
+			bigFacebookOver = new createjs.Container();
+			bigFacebookOver.visible = false;
+			bigFacebookOver.addChild(bigFacebookOverBmp);
+		}
+		
+		function loadTwitter()
+		{
+			var smallTwitterBmp = new createjs.Bitmap("images/twitter34x27.png").set({name: "smallTwitter", cursor: "pointer"});
+			smallTwitter = new createjs.Container();
+			smallTwitter.addChild(smallTwitterBmp);
+			
+			var smallTwitterOverBmp = new createjs.Bitmap("images/twitterOver34x27.png").set({name: "smallTwitterOver", cursor: "pointer"});
+			smallTwitterOver = new createjs.Container();
+			smallTwitterOver.visible = false;
+			smallTwitterOver.addChild(smallTwitterOverBmp);
+			
+			var smallMediumTwitterBmp = new createjs.Bitmap("images/twitter51x41.png").set({name: "smallMediumTwitter", cursor: "pointer"});
+			smallMediumTwitter = new createjs.Container();
+			smallMediumTwitter.addChild(smallMediumTwitterBmp);
+			
+			var smallMediumTwitterOverBmp = new createjs.Bitmap("images/twitterOver51x41.png").set({name: "smallMediumTwitterOver", cursor: "pointer"});
+			smallMediumTwitterOver = new createjs.Container();
+			smallMediumTwitterOver.visible = false;
+			smallMediumTwitterOver.addChild(smallMediumTwitterOverBmp);
+			
+			var mediumTwitterBmp = new createjs.Bitmap("images/twitter68x54.png").set({name: "mediumTwitter", cursor: "pointer"});
+			mediumTwitter = new createjs.Container();
+			mediumTwitter.addChild(mediumTwitterBmp);
+			
+			var mediumTwitterOverBmp = new createjs.Bitmap("images/twitterOver68x54.png").set({name: "mediumTwitterOver", cursor: "pointer"});
+			mediumTwitterOver = new createjs.Container();
+			mediumTwitterOver.visible = false;
+			mediumTwitterOver.addChild(mediumTwitterOverBmp);
+			
+			var mediumBigTwitterBmp = new createjs.Bitmap("images/twitter88x70.png").set({name: "mediumBigTwitter", cursor: "pointer"});
+			mediumBigTwitter = new createjs.Container();
+			mediumBigTwitter.addChild(mediumBigTwitterBmp);
+			
+			var mediumBigTwitterOverBmp = new createjs.Bitmap("images/twitterOver88x70.png").set({name: "mediumBigTwitterOver", cursor: "pointer"});
+			mediumBigTwitterOver = new createjs.Container();
+			mediumBigTwitterOver.visible = false;
+			mediumBigTwitterOver.addChild(mediumBigTwitterOverBmp);
+			
+			var bigTwitterBmp = new createjs.Bitmap("images/twitter136x108.png").set({name: "bigTwitter", cursor: "pointer"});
+			bigTwitter = new createjs.Container();
+			bigTwitter.addChild(bigTwitterBmp);
+			
+			var bigTwitterOverBmp = new createjs.Bitmap("images/twitterOver136x108.png").set({name: "bigTwitterOver", cursor: "pointer"});
+			bigTwitterOver = new createjs.Container();
+			bigTwitterOver.visible = false;
+			bigTwitterOver.addChild(bigTwitterOverBmp);
+		}
+		
+		function loadInstangram()
+		{
+			var smallInstangramBmp = new createjs.Bitmap("images/instangram34x26.png").set({name: "smallInstangram", cursor: "pointer"});
+			smallInstangram = new createjs.Container();
+			smallInstangram.addChild(smallInstangramBmp);
+			
+			var smallInstangramOverBmp = new createjs.Bitmap("images/instangramOver34x26.png").set({name: "smallInstangramOver", cursor: "pointer"});
+			smallInstangramOver = new createjs.Container();
+			smallInstangramOver.visible = false;
+			smallInstangramOver.addChild(smallInstangramOverBmp);
+			
+			var smallMediumInstangramBmp = new createjs.Bitmap("images/instangram50x38.png").set({name: "smallMediumInstangram", cursor: "pointer"});
+			smallMediumInstangram = new createjs.Container();
+			smallMediumInstangram.addChild(smallMediumInstangramBmp);
+			
+			var smallMediumInstangramOverBmp = new createjs.Bitmap("images/instangramOver50x38.png").set({name: "smallMediumInstangramOver", cursor: "pointer"});
+			smallMediumInstangramOver = new createjs.Container();
+			smallMediumInstangramOver.visible = false;
+			smallMediumInstangramOver.addChild(smallMediumInstangramOverBmp);
+			
+			var mediumInstangramBmp = new createjs.Bitmap("images/instangram67x51.png").set({name: "mediumInstangram", cursor: "pointer"});
+			mediumInstangram = new createjs.Container();
+			mediumInstangram.addChild(mediumInstangramBmp);
+			
+			var mediumInstangramOverBmp = new createjs.Bitmap("images/instangramOver67x51.png").set({name: "mediumInstangramOver", cursor: "pointer"});
+			mediumInstangramOver = new createjs.Container();
+			mediumInstangramOver.visible = false;
+			mediumInstangramOver.addChild(mediumInstangramOverBmp);
+			
+			var mediumBigInstangramBmp = new createjs.Bitmap("images/instangram87x66.png").set({name: "mediumBigInstangram", cursor: "pointer"});
+			mediumBigInstangram = new createjs.Container();
+			mediumBigInstangram.addChild(mediumBigInstangramBmp);
+			
+			var mediumBigInstangramOverBmp = new createjs.Bitmap("images/instangramOver87x66.png").set({name: "mediumBigInstangramOver", cursor: "pointer"});
+			mediumBigInstangramOver = new createjs.Container();
+			mediumBigInstangramOver.visible = false;
+			mediumBigInstangramOver.addChild(mediumBigInstangramOverBmp);
+			
+			var bigInstangramBmp = new createjs.Bitmap("images/instangram134x102.png").set({name: "bigInstangram", cursor: "pointer"});
+			bigInstangram = new createjs.Container();
+			bigInstangram.addChild(bigInstangramBmp);
+			
+			var bigInstangramOverBmp = new createjs.Bitmap("images/instangramOver134x102.png").set({name: "bigInstangramOver", cursor: "pointer"});
+			bigInstangramOver = new createjs.Container();
+			bigInstangramOver.visible = false;
+			bigInstangramOver.addChild(bigInstangramOverBmp);
+		}
+		
+		function loadYoutube()
+		{
+			var smallYoutubeBmp = new createjs.Bitmap("images/youtube35x27.png").set({name: "smallYoutube", cursor: "pointer"});
+			smallYoutube = new createjs.Container();
+			smallYoutube.addChild(smallYoutubeBmp);
+			
+			var smallYoutubeOverBmp = new createjs.Bitmap("images/youtubeOver35x27.png").set({name: "smallYoutubeOver", cursor: "pointer"});
+			smallYoutubeOver = new createjs.Container();
+			smallYoutubeOver.visible = false;
+			smallYoutubeOver.addChild(smallYoutubeOverBmp);
+			
+			var smallMediumYoutubeBmp = new createjs.Bitmap("images/youtube52x41.png").set({name: "smallMediumYoutube", cursor: "pointer"});
+			smallMediumYoutube = new createjs.Container();
+			smallMediumYoutube.addChild(smallMediumYoutubeBmp);
+			
+			var smallMediumYoutubeOverBmp = new createjs.Bitmap("images/youtubeOver52x41.png").set({name: "smallMediumYoutubeOver", cursor: "pointer"});
+			smallMediumYoutubeOver = new createjs.Container();
+			smallMediumYoutubeOver.visible = false;
+			smallMediumYoutubeOver.addChild(smallMediumYoutubeOverBmp);
+			
+			var mediumYoutubeBmp = new createjs.Bitmap("images/youtube69x54.png").set({name: "mediumYoutube", cursor: "pointer"});
+			mediumYoutube = new createjs.Container();
+			mediumYoutube.addChild(mediumYoutubeBmp);
+			
+			var mediumYoutubeOverBmp = new createjs.Bitmap("images/youtubeOver69x54.png").set({name: "mediumYoutubeOver", cursor: "pointer"});
+			mediumYoutubeOver = new createjs.Container();
+			mediumYoutubeOver.visible = false;
+			mediumYoutubeOver.addChild(mediumYoutubeOverBmp);
+			
+			var mediumBigYoutubeBmp = new createjs.Bitmap("images/youtube90x70.png").set({name: "mediumBigYoutube", cursor: "pointer"});
+			mediumBigYoutube = new createjs.Container();
+			mediumBigYoutube.addChild(mediumBigYoutubeBmp);
+			
+			var mediumBigYoutubeOverBmp = new createjs.Bitmap("images/youtubeOver90x70.png").set({name: "mediumBigYoutubeOver", cursor: "pointer"});
+			mediumBigYoutubeOver = new createjs.Container();
+			mediumBigYoutubeOver.visible = false;
+			mediumBigYoutubeOver.addChild(mediumBigYoutubeOverBmp);
+			
+			var bigYoutubeBmp = new createjs.Bitmap("images/youtube138x108.png").set({name: "bigYoutube", cursor: "pointer"});
+			bigYoutube = new createjs.Container();
+			bigYoutube.addChild(bigYoutubeBmp);
+			
+			var bigYoutubeOverBmp = new createjs.Bitmap("images/youtubeOver138x108.png").set({name: "bigYoutubeOver", cursor: "pointer"});
+			bigYoutubeOver = new createjs.Container();
+			bigYoutubeOver.visible = false;
+			bigYoutubeOver.addChild(bigYoutubeOverBmp);
+		}
+		
+		function loadCarabela()
+		{
+			var smallCalaberaBmp = new createjs.Bitmap("images/calabera24x28.png").set({name: "smallCalabera", regX:12, regY:14,
+			 cursor: "pointer"});
+			smallCalabera = new createjs.Container();
+			smallCalabera.addChild(smallCalaberaBmp);
+			
+			var smallMediumCalaberaBmp = new createjs.Bitmap("images/calabera35x41.png").set({name: "smallMediumCalabera", regX:17, regY:20,
+			 cursor: "pointer"});
+			smallMediumCalabera = new createjs.Container();
+			smallMediumCalabera.addChild(smallMediumCalaberaBmp);
+			
+			var mediumCalaberaBmp = new createjs.Bitmap("images/calabera47x55.png").set({name: "mediumCalabera", regX:23, regY:27,
+			 cursor: "pointer"});
+			mediumCalabera = new createjs.Container();
+			mediumCalabera.addChild(mediumCalaberaBmp);
+			
+			var mediumBigCalaberaBmp = new createjs.Bitmap("images/calabera61x71.png").set({name: "mediumBigCalabera", regX:30, regY:35,
+			 cursor: "pointer"});
+			mediumBigCalabera = new createjs.Container();
+			mediumBigCalabera.addChild(mediumBigCalaberaBmp);
+			
+			var bigCalaberaBmp = new createjs.Bitmap("images/calabera94x110.png").set({name: "bigCalabera", regX:47, regY:55,
+			 cursor: "pointer"});
+			bigCalabera = new createjs.Container();
+			bigCalabera.addChild(bigCalaberaBmp);
+		}
+		
+		function loadAddress()
+		{
+			var addressBmp = new createjs.Bitmap("images/direccion.png").set({name: "address", cursor: "pointer"});
+			address = new createjs.Container();
+		}
+		
+		function loadRrd()
+		{
+			var rrdBmp = new createjs.Bitmap("images/rrd.png").set({name: "rrd", cursor: "pointer"});
+			rrd = new createjs.Container();
+		}
+		 
+		/**
+		 * create content (centered)
+		 */
+		function createContent() 
+		{
+			content = new createjs.Container();
+			stage.addChild(content);
+			
+			var smallHorizontalImg = new Image();
+			smallHorizontalImg.src = "images/horizontal480x320.jpg";
+			smallHorizontalImg.onload = handleSmallHorizontalLoad;
+			
+			var smallVerticalImg = new Image();
+			smallVerticalImg.src = "images/vertical320x480.jpg";
+			smallVerticalImg.onload = handleSmallVerticalLoad;
+			
+			var smallMediumHorizontalImg = new Image();
+			smallMediumHorizontalImg.src = "images/horizontal720x480.jpg";
+			smallMediumHorizontalImg.onload = handleSmallMediumHorizontalLoad;
+			
+			var smallMediumVerticalImg = new Image();
+			smallMediumVerticalImg.src = "images/vertical480x720.jpg";
+			smallMediumVerticalImg.onload = handleSmallMediumVerticalLoad;
+			
+			var mediumHorizontalImg = new Image();
+			mediumHorizontalImg.src = "images/horizontal960x640.jpg";
+			mediumHorizontalImg.onload = handleMediumHorizontalLoad;
+			
+			var mediumVerticalImg = new Image();
+			mediumVerticalImg.src = "images/vertical640x960.jpg";
+			mediumVerticalImg.onload = handleMediumVerticalLoad;
+			
+			var mediumBigHorizontalImg = new Image();
+			mediumBigHorizontalImg.src = "images/horizontal1248x832.jpg";
+			mediumBigHorizontalImg.onload = handleMediumBigHorizontalLoad;
+			
+			var mediumBigVerticalImg = new Image();
+			mediumBigVerticalImg.src = "images/vertical832x1248.jpg";
+			mediumBigVerticalImg.onload = handleMediumBigVerticalLoad;
+			
+			var bigHorizontalImg = new Image();
+			bigHorizontalImg.src = "images/horizontal1920x1280.jpg";
+			bigHorizontalImg.onload = handleBigHorizontalLoad;
+			
+			var bigVerticalImg = new Image();
+			bigVerticalImg.src = "images/vertical1240x1860.jpg";
+			bigVerticalImg.onload = handleBigVerticalLoad;
+			
+			setDimension();
+			
+			createIcons();
+		}
+		
+		function setDimension()
+		{
+			var screenWidth = window.innerWidth * window.devicePixelRatio;
+			var screenHeight = window.innerHeight * window.devicePixelRatio;
+			
+			if (screenWidth > screenHeight)
+			{
+				orientationStr = "Landscape";
+				
+				if (screenWidth >= 1920)
+				{
+					size = "large";
+					setImageSize(1920, 1280);
+				}
+				else if (screenWidth >= 1248)
+				{
+					size = "mediumBig";
+					setImageSize(1248, 832);
+				}
+				else if (screenWidth >= 960)
+				{
+					size = "medium";
+					setImageSize(960, 640);
+				}
+				else if (screenWidth >= 720)	
+				{
+					size = "smallMedium";
+					setImageSize(720, 480);
+				}
+				else
+				{
+					size = "small";
+					setImageSize(480, 320);
+				}
+			}
+			else
+			{
+				orientationStr = "Portrait";
+				
+				if (screenWidth >= 1240)
+				{
+					size = "large";
+					setImageSize(1240, 1860);
+				}
+				else if (screenWidth >= 832)
+				{
+					size = "mediumBig";
+					setImageSize(832, 1248);
+				}
+				else if (screenWidth >= 640)
+				{
+					size = "medium";
+					setImageSize(640, 960);
+				}
+				else if (screenWidth >= 480)	
+				{
+					size = "smallMedium";
+					setImageSize(480, 720);
+				}
+				else
+				{
+					size = "small";
+					setImageSize(320, 480);
+				}
+			}
+			
+			console.log(orientationStr);
+			console.log(size);
+		}
+		
+		function setImageSize(loadWidth, loadHeight)
+		{
+			calculatedWidth = loadWidth;
+			calculatedHeight = loadHeight;
+		}
+		
+		function handleSmallHorizontalLoad(event) 
+		{
+			smallHorizontal = new createjs.Bitmap(event.currentTarget);
+			
+			handleHorizontalLoad(smallHorizontal);
+		}
+		
+		function handleSmallVerticalLoad(event) 
+		{
+			smallVertical = new createjs.Bitmap(event.currentTarget);
+			
+			handleVerticalLoad(smallVertical);
+		}
+		
+		function handleSmallMediumHorizontalLoad(event) 
+		{
+			smallMediumHorizontal = new createjs.Bitmap(event.currentTarget);
+			
+			handleHorizontalLoad(smallMediumHorizontal)
+		}
+		
+		function handleSmallMediumVerticalLoad(event) 
+		{
+			smallMediumVertical = new createjs.Bitmap(event.currentTarget);
+			
+			handleVerticalLoad(smallMediumVertical)
+		}
+		
+		function handleMediumHorizontalLoad(event) 
+		{
+			mediumHorizontal = new createjs.Bitmap(event.currentTarget);
+			
+			handleHorizontalLoad(mediumHorizontal)
+		}
+		
+		function handleMediumVerticalLoad(event) 
+		{
+			mediumVertical = new createjs.Bitmap(event.currentTarget);
+			
+			handleVerticalLoad(mediumVertical)
+		}
+		
+		function handleMediumBigHorizontalLoad(event) 
+		{
+			mediumBigHorizontal = new createjs.Bitmap(event.currentTarget);
+			
+			handleHorizontalLoad(mediumBigHorizontal)
+		}
+		
+		function handleMediumBigVerticalLoad(event) 
+		{
+			mediumBigVertical = new createjs.Bitmap(event.currentTarget);
+			
+			handleVerticalLoad(mediumBigVertical)
+		}
+		
+		function handleBigHorizontalLoad(event) 
+		{
+			bigHorizontal = new createjs.Bitmap(event.currentTarget);
+			
+			handleHorizontalLoad(bigHorizontal)
+		}
+		
+		function handleBigVerticalLoad(event) 
+		{
+			bigVertical = new createjs.Bitmap(event.currentTarget);
+			
+			handleVerticalLoad(bigVertical)
+		}
+		
+		function handleHorizontalLoad(bitmap) 
+		{
+			var loadWidth = bitmap.image.width;
+			var loadHeight = bitmap.image.height;
+			
+			if(orientationStr == "Landscape" && loadWidth == calculatedWidth)
+			{
+				content.addChild(bitmap);
+				//content.visible = true;
+				//content.visible = false;
+				
+				handleImageLoad(content);
+			}
+		}
+		
+		function handleVerticalLoad(bitmap)  
+		{
+			var loadWidth = bitmap.image.width;
+			var loadHeight = bitmap.image.height;
+				
+			if(orientationStr == "Portrait" && loadWidth == calculatedWidth)
+			{
+				content.addChild(bitmap);
+				//content.visible = false;
+				//content.visible = true;
+				
+				handleImageLoad(content);
+			}
+		}
+		
+		function getWidhtDimension() 
+		{
+			var width = 0, height = 0;
+			if( typeof( window.innerWidth ) == 'number' ) 
+			{
+				height = window.innerHeight;
+				width = window.innerWidth;
+			} else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) ) 
+			{
+				height = document.documentElement.clientHeight;
+				width = document.documentElement.clientWidth;
+			} else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) ) 
+			{
+				height = document.body.clientHeight;
+				width = document.body.clientWidth;
+			}
+			return width;
+		}
+		
+		function handleImageLoad(content) 
+		{
+			var totalWidth = document.documentElement.clientWidth;
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+			
+			if (screenWidth < totalWidth)
+			{
+				screenWidth = document.documentElement.clientWidth;
+				screenHeight = document.documentElement.clientHeight;
+			}
+
+			scale = screenWidth / calculatedWidth;
+			
+			imageWidth = calculatedWidth * scale;
+			imageHeight = calculatedHeight * scale;
+			
+			console.log("imageWidth: " + imageWidth);
+			console.log("imageHeight: " + imageHeight);
+			console.log("screenWidth: " + screenWidth);
+			console.log("screenHeight: " + screenHeight);
+			console.log("scale: " + scale);
+			
+			content.scaleX = scale;
+			content.scaleY = scale;
+			
+			resizeIcons();
+			
+			stage.canvas.width = imageWidth;
+			stage.canvas.height = imageHeight;
+		}
+		
+		function handleMouseover(evt) 
+		{
+			console.log("type=" + evt.type + " target=" + evt.target.name + " currentTarget=" + evt.currentTarget.name);
+			var target = evt.target.name;
+			var hover;
+			
+			switch (target) {
+				case "mediumBigFacebook":
+					hover = mediumBigFacebook.getChildAt(1);
+					hover.visible = true;
+					break;
+				case "facebook":
+					facebookOver.visible = true;
+					break;
+				case "twitter":
+					twitterOver.visible = true;
+					break;
+				case "instangram":
+					instangramOver.visible = true;
+					break;
+				case "youtube":
+					youtubeOver.visible = true;
+					break;
+				case "calabera":
+					runTween();
+					facebookOver.visible = true;
+					twitterOver.visible = true;
+					instangramOver.visible = true;
+					youtubeOver.visible = true;
+					break;
+			}
+			
+			//tick();
+		}
+		
+		function runTween()
+		{
+			var playing = createjs.Tween.hasActiveTweens(calabera);
+			console.log(playing);
+			if (!playing)
+			{
+				console.log("no playing");
+				//calaveraTween = createjs.Tween.get(calabera).to({rotation:360}, 2000);
+				//isTweening = true;
+				
+				//createjs.Tween.removeTweens(calabera);
+				
+				//createjs.Tween.get(calabera,{paused:true,},{override: true}).to({rotation:360}, 2000).call(handleComplete);
+				createjs.Tween.get(calabera,{override: true}).to({rotation:360}, 2000).call(handleComplete);	
+			}	
+			else
+			{
+				console.log("playing");
+			}
+			
+		}
+		
+		function handleComplete() 
+		{
+			console.log("Done...");
+			isTweening = true;
+			tick();
+		}
+		
+		function handleMouseout(evt) 
+		{
+			console.log("type=" + evt.type + " target=" + evt.target.name + " currentTarget=" + evt.currentTarget.name);
+			var target = evt.target.name;
+			var hover;
+			
+			switch (target) {
+				case "mediumBigFacebookOver":
+					hover = mediumBigFacebook.getChildAt(1);
+					hover.visible = false;
+					break;
+				case "facebook":
+					facebookOver.visible = false;
+					break;
+				case "twitter":
+					twitterOver.visible = false;
+					break;
+				case "instangram":
+					instangramOver.visible = false;
+					break;
+				case "youtube":
+					youtubeOver.visible = false;
+					break;
+				case "calabera":
+					facebookOver.visible = false;
+					twitterOver.visible = false;
+					instangramOver.visible = false;
+					youtubeOver.visible = false;
+					break;
+			}
+			
+			//tick();
+		}
+		
+		function handleMousedown(evt) 
+		{
+			console.log("type=" + evt.type + " target=" + evt.target.name + " currentTarget=" + evt.currentTarget.name);
+			var target = evt.target.name;
+
+			switch (target) {
+				case "mediumBigFacebookOver":
+					window.location = "https://www.facebook.com/PezGloboBeachBar";
+					break;
+				case "facebook":
+					window.location = "https://www.facebook.com/PezGloboBeachBar";
+					break;
+				case "twitter":
+					window.location = "https://twitter.com/pezglobobb";
+					break;
+				case "instangram":
+					window.location = "https://instagram.com/pezglobobeachbar/";
+					break;
+				case "youtube":
+					window.location = "https://www.youtube.com/channel/UC8bt_Ie61WhJVWY6nNJFnpQ";
+					break;
+				case "address":
+					window.location = "https://www.google.es/maps/place/Carrer+Jos%C3%A9+Segrelles,+11,+46529+Canet+d'en+Berenguer,+Valencia/@39.6801824,-0.2064551,568m/data=!3m2!1e3!4b1!4m2!3m1!1s0xd60166833aa4fad:0xd70f1b77e3c89fbb!6m1!1e1"
+					break;
+				case "rrd":
+					window.location = "https://www.behance.net/RamonRoselloDesign";
+					break;
+			}
+		}
+		
+		/**
+		 * Tick Handler
+		 */
+		function tick() 
+		{
+			//angle += 1;
+			//var value = angle * 90;
+
+			//calabera.rotation = value;
+			stage.update();
+		}	
+
+		/**
+		 * Resize event handler
+		 */
+		function resize(event) 
+		{
+			//resizeBackground();
+			
+			resizeImage();
+			
+			//tick();
+	    }
+		
+		function resizeImage() 
+		{
+			var lastSize = size;
+			var lastOrientation = orientationStr;
+			
+			setDimension();
+			
+			if (orientationStr != lastOrientation)
+			{
+				console.log("cambio orientacion");
+				
+				change();
+			}
+			else if (size != lastSize)
+			{
+				console.log("cambio tamaño");
+				
+				change();
+			}
+		}
+		
+		function change() 
+		{
+			if(orientationStr == "Landscape")
+			{
+				changeHorizontal();
+			}
+			else
+			{
+				changeVertical();
+			}
+			
+			handleImageLoad(content);
+		}
+		
+		function changeHorizontal() 
+		{
+			content.removeChild(0);
+					
+			if (size == "small")
+			{
+				console.log("cambio a horizontal pequeño");
+				content.addChild(smallHorizontal);
+			}
+			else if (size == "smallMediumVertical")
+			{
+				console.log("cambio a horizontal medio pequeño");
+				content.addChild(smallMediumHorizontal);
+			}
+			else if (size == "medium")
+			{
+				console.log("cambio a horizontal medio");
+				content.addChild(mediumHorizontal);
+			}
+			else if (size == "mediumBig")
+			{
+				console.log("cambio a horizontal medio grande");
+				content.addChild(mediumBigHorizontal);
+			}
+			else if (size == "large")
+			{
+				console.log("cambio a horizontal grande");
+				content.addChild(bigHorizontal);
+			}
+		}
+		
+		function changeVertical() 
+		{
+			content.removeChild(0);
+					
+			if (size == "small")
+			{
+				console.log("cambio a vertical pequeño");
+				content.addChild(smallVertical);
+			}
+			else if (size == "smallMedium")
+			{
+				console.log("cambio a vertical medio pequeño");
+				content.addChild(smallMediumHorizontal);
+			}
+			else if (size == "medium")
+			{
+				console.log("cambio a vertical medio");
+				content.addChild(mediumVertical);
+			}
+			else if (size == "mediumBig")
+			{
+				console.log("cambio a vertical medio grande");
+				content.addChild(mediumBigHorizontal);
+			}
+			else if (size == "large")
+			{
+				console.log("cambio a vertical grande");
+				content.addChild(bigVertical);
+			}
+		}
+		
+		function resizeIcons()
+		{
+			var totalWidth = document.documentElement.clientWidth;
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+			
+			if (screenWidth < totalWidth)
+			{
+				//var screenWidth = window.innerWidth * window.devicePixelRatio ;
+				//var screenHeight = window.innerHeight * window.devicePixelRatio ;
+				screenWidth = document.documentElement.clientWidth;
+				screenHeight = document.documentElement.clientHeight;
+			}
+			
+			if (size == "large")
+			{
+				resizeFacebook(bigFacebook, bigFacebookOver);
+				resizeTwitter(bigTwitter, bigTwitterOver);
+				resizeInstangram(bigInstangram, bigInstangramOver);
+				resizeYoutube(bigYoutube, bigYoutubeOver);
+				resizeCalabera(bigCalabera);
+				resizeAddress(address);
+				resizeRrd(rrd);
+			}
+			else if (size == "mediumBig")
+			{
+				resizeFacebooka(mediumBigFacebook);
+				//resizeFacebook(mediumBigFacebook, mediumBigFacebookOver);
+				resizeTwitter(mediumBigTwitter, mediumBigTwitterOver);
+				resizeInstangram(mediumBigInstangram, mediumBigInstangramOver);
+				resizeYoutube(mediumBigYoutube, mediumBigYoutubeOver);
+				resizeCalabera(mediumBigCalabera);
+				resizeAddress(address);
+				resizeRrd(rrd);
+			}
+			else if (size == "medium")
+			{
+				resizeFacebook(mediumFacebook, mediumFacebookOver);
+				resizeTwitter(mediumTwitter, mediumTwitterOver);
+				resizeInstangram(mediumInstangram, mediumInstangramOver);
+				resizeYoutube(mediumYoutube, mediumYoutubeOver);
+				resizeCalabera(mediumCalabera);
+				resizeAddress(address);
+				resizeRrd(rrd);
+			}
+			else if (size == "smallMedium")	
+			{
+				resizeFacebook(smallMediumFacebook, smallMediumFacebookOver);
+				resizeTwitter(smallMediumTwitter, smallMediumTwitterOver);
+				resizeInstangram(smallMediumInstangram, smallMediumInstangramOver);
+				resizeYoutube(smallMediumYoutube, smallMediumYoutubeOver);
+				resizeCalabera(smallMediumCalabera);
+				resizeAddress(address);
+				resizeRrd(rrd);
+			}
+			else //size == "small"
+			{
+				resizeFacebook(smallFacebook, smallFacebookOver);
+				resizeTwitter(smallTwitter, smallTwitterOver);
+				resizeInstangram(smallInstangram, smallInstangramOver);
+				resizeYoutube(smallYoutube, smallYoutubeOver);
+				resizeCalabera(smallCalabera);
+				resizeAddress(address);
+				resizeRrd(rrd);
+			}		
+		}
+		
+		function resizeFacebooka(bitmap)
+		{
+			bitmap.scaleX = scale;
+			bitmap.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				bitmap.x = (calculatedWidth * 0.539) * scale; //517
+				bitmap.y = (calculatedHeight * 0.642) * scale; //411
+				bitmap.rotation = 0;
+			}
+			else
+			{
+				bitmap.x = (calculatedWidth * 0.431) * scale; //276
+				bitmap.y = (calculatedHeight * 0.293) * scale; //281
+				bitmap.rotation = 9;
+			}
+		}
+		
+		function resizeFacebook(bitmap, bitmapOver)
+		{
+			bitmap.scaleX = scale;
+			bitmap.scaleY = scale;
+			bitmapOver.scaleX = scale;
+			bitmapOver.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				bitmap.x = (calculatedWidth * 0.539) * scale; //517
+				bitmap.y = (calculatedHeight * 0.642) * scale; //411
+				bitmapOver.x = (calculatedWidth * 0.539) * scale;
+				bitmapOver.y = (calculatedHeight * 0.642) * scale;
+				bitmap.rotation = 0;
+				bitmapOver.rotation = 0;
+			}
+			else
+			{
+				bitmap.x = (calculatedWidth * 0.431) * scale; //276
+				bitmap.y = (calculatedHeight * 0.293) * scale; //281
+				bitmapOver.x = (calculatedWidth * 0.431) * scale;
+				bitmapOver.y = (calculatedHeight * 0.293) * scale;
+				bitmap.rotation = 9;
+				bitmapOver.rotation = 9;
+			}
+		}
+		
+		function resizeTwitter(bitmap, bitmapOver)
+		{
+			bitmap.scaleX = scale;
+			bitmap.scaleY = scale;
+			bitmapOver.scaleX = scale;
+			bitmapOver.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				bitmap.x = (calculatedWidth * 0.636) * scale; //613
+				bitmap.y = (calculatedHeight * 0.645) * scale; //413
+				bitmapOver.x = (calculatedWidth * 0.636) * scale;
+				bitmapOver.y = (calculatedHeight * 0.645) * scale;
+				bitmap.rotation = 0;
+				bitmapOver.rotation = 0;
+			}
+			else
+			{
+				bitmap.x = (calculatedWidth * 0.552) * scale; //353
+				bitmap.y = (calculatedHeight * 0.305) * scale; //293
+				bitmapOver.x = (calculatedWidth * 0.552) * scale;
+				bitmapOver.y = (calculatedHeight * 0.305) * scale;
+				bitmap.rotation = 9;
+				bitmapOver.rotation = 9;
+			}
+		}
+		
+		function resizeInstangram(bitmap, bitmapOver)
+		{
+			bitmap.scaleX = scale;
+			bitmap.scaleY = scale;
+			bitmapOver.scaleX = scale;
+			bitmapOver.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				bitmap.x = (calculatedWidth * 0.716) * scale; //688
+				bitmap.y = (calculatedHeight * 0.651) * scale; //417
+				bitmapOver.x = (calculatedWidth * 0.716) * scale;
+				bitmapOver.y = (calculatedHeight * 0.651) * scale;
+				bitmap.rotation = 0;
+				bitmapOver.rotation = 0;
+			}
+			else
+			{
+				bitmap.x = (calculatedWidth * 0.672) * scale; //430
+				bitmap.y = (calculatedHeight * 0.322) * scale; //309
+				bitmapOver.x = (calculatedWidth * 0.672) * scale;
+				bitmapOver.y = (calculatedHeight *  0.322) * scale;
+				bitmap.rotation = 8;
+				bitmapOver.rotation = 8;
+			}
+		}
+		
+		function resizeYoutube(bitmap, bitmapOver)
+		{
+			bitmap.scaleX = scale;
+			bitmap.scaleY = scale;
+			bitmapOver.scaleX = scale;
+			bitmapOver.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				bitmap.x = (calculatedWidth * 0.806) * scale; //774
+				bitmap.y = (calculatedHeight * 0.652) * scale; //417
+				bitmapOver.x = (calculatedWidth * 0.806) * scale;
+				bitmapOver.y = (calculatedHeight * 0.652) * scale;
+				bitmap.rotation = 0;
+				bitmapOver.rotation = 0;
+			}
+			else
+			{
+				bitmap.x = (calculatedWidth * 0.795) * scale; //509
+				bitmap.y = (calculatedHeight * 0.331) * scale; //318
+				bitmapOver.x = (calculatedWidth * 0.795) * scale;
+				bitmapOver.y = (calculatedHeight * 0.331) * scale;
+				bitmap.rotation = 8;
+				bitmapOver.rotation = 8;
+			}
+		}
+		
+		function resizeCalabera(bitmap)
+		{
+			bitmap.scaleX = scale;
+			bitmap.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				bitmap.x = (calculatedWidth * 0.689) * scale; //661
+				bitmap.y = (calculatedHeight * 0.808) * scale; //517
+				bitmap.rotation = 0;
+			}
+			else
+			{
+				bitmap.x = (calculatedWidth * 0.622) * scale; //398
+				bitmap.y = (calculatedHeight * 0.412) * scale; //397
+				bitmap.rotation = 10;
+			}
+		}
+		
+		function resizeAddress(bitmap)
+		{
+			bitmap.scaleX = scale;
+			bitmap.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				bitmap.x = (calculatedWidth * 0.11) * scale; //10
+				bitmap.y = (calculatedHeight * 0.828) * scale; //530
+			}
+			else
+			{
+				bitmap.x = (calculatedWidth * 0.336) * scale; //215
+				bitmap.y = (calculatedHeight * 0.639) * scale; //613
+				
+			}
+		}
+		
+		function resizeRrd(bitmap)
+		{
+			bitmap.scaleX = scale;
+			bitmap.scaleY = scale;
+			
+			if(orientationStr == 'Landscape')
+			{
+				bitmap.x = (calculatedWidth * 0.969) * scale; //930
+				bitmap.y = (calculatedHeight * 0.625) * scale; //400 
+			}
+			else
+			{
+				bitmap.x = (calculatedWidth * 0.938) * scale; //600
+				bitmap.y = (calculatedHeight * 0.833) * scale; //800 
+			}
+		}
+		
+		function resizeBackground()
+		{
+			// Background: full screen redraw 
+	    	bg.graphics.clear()
+	    	bg.graphics.beginFill("#222").drawRect(0,0,stage.canvas.width,stage.canvas.height);
+		}
+
+	</script>
+</head>
+<body onLoad="init();">
+	<canvas id="demoCanvas" width="500" height="600"  >
+		alternate content
+	</canvas>
+</body>
+</html>

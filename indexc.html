@@ -1,0 +1,430 @@
+<meta charset="UTF-8">
+<html>
+<head>
+<!--<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">-->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1">
+	<title>Pez Globo</title>	
+
+	<style type="text/css">
+
+		/* Remove margins and HTML scrollbars */
+		BODY, HTML  {
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+	</style>
+
+	<script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
+
+	<script>
+		var stage, bg;
+		var content;
+		var smallHorizontal, smallMediumHorizontal, mediumHorizontal, mediumBigHorizontal, bigHorizontal;
+		var	smallVertical, smallMediumVertical, mediumVertical, mediumBigVertical, bigVertical;
+		var imageWidth,imageHeight,calculatedWidth,calculatedHeight,centerWidth,centerHeight;
+		var scale;
+		var orientationStr, size;
+
+		// Resize event listener
+		window.addEventListener('resize', resize, false);
+		window.addEventListener('checkOrientation', resize, false);
+
+		/**
+		 * Init handler
+		 */
+		function init() 
+		{
+			stage = new createjs.Stage("demoCanvas");
+			stage.enableMouseOver(10);
+			
+			content = new createjs.Container();
+			stage.addChild(content);
+			
+			setDimension();
+			
+			createContent();
+			
+			createjs.Ticker.addEventListener("tick", stage);
+		}
+		
+		function setDimension()
+		{
+			var screenWidth = window.innerWidth * window.devicePixelRatio;
+			var screenHeight = window.innerHeight * window.devicePixelRatio;
+			
+			if (screenWidth > screenHeight)
+			{
+				orientationStr = "Landscape";
+				
+				if (screenWidth >= 1920)
+				{
+					size = "large";
+					setImageSize(1920, 1280);
+				}
+				else if (screenWidth >= 1248)
+				{
+					size = "mediumBig";
+					setImageSize(1248, 832);
+				}
+				else if (screenWidth >= 960)
+				{
+					size = "medium";
+					setImageSize(960, 640);
+				}
+				else if (screenWidth >= 720)	
+				{
+					size = "smallMedium";
+					setImageSize(720, 480);
+				}
+				else
+				{
+					size = "small";
+					setImageSize(480, 320);
+				}
+			}
+			else
+			{
+				orientationStr = "Portrait";
+				
+				if (screenWidth >= 1240)
+				{
+					size = "large";
+					setImageSize(1240, 1860);
+				}
+				else if (screenWidth >= 832)
+				{
+					size = "mediumBig";
+					setImageSize(832, 1248);
+				}
+				else if (screenWidth >= 640)
+				{
+					size = "medium";
+					setImageSize(640, 960);
+				}
+				else if (screenWidth >= 480)	
+				{
+					size = "smallMedium";
+					setImageSize(480, 720);
+				}
+				else
+				{
+					size = "small";
+					setImageSize(320, 480);
+				}
+			}
+			
+			console.log(orientationStr);
+			console.log(size);
+		}
+		
+		function setImageSize(loadWidth, loadHeight)
+		{
+			calculatedWidth = loadWidth;
+			calculatedHeight = loadHeight;
+		}
+		
+		function createContent() 
+		{			
+			switch (size) {
+				case "small":
+					var smallHorizontalImg = new Image();
+					smallHorizontalImg.src = "images/horizontalv480x320.jpg";
+					smallHorizontalImg.onload = handleSmallHorizontalLoad;
+			
+					var smallVerticalImg = new Image();
+					smallVerticalImg.src = "images/verticalv320x480.jpg";
+					smallVerticalImg.onload = handleSmallVerticalLoad;
+					break;
+				case "smallMedium":
+					var smallMediumHorizontalImg = new Image();
+					smallMediumHorizontalImg.src = "images/horizontalv720x480.jpg";
+					smallMediumHorizontalImg.onload = handleSmallMediumHorizontalLoad;
+					
+					var smallMediumVerticalImg = new Image();
+					smallMediumVerticalImg.src = "images/verticalv480x720.jpg";
+					smallMediumVerticalImg.onload = handleSmallMediumVerticalLoad;
+					break;
+				case "medium":
+					var mediumHorizontalImg = new Image();
+					mediumHorizontalImg.src = "images/horizontalv960x640.jpg";
+					mediumHorizontalImg.onload = handleMediumHorizontalLoad;
+					
+					var mediumVerticalImg = new Image();
+					mediumVerticalImg.src = "images/verticalv640x960.jpg";
+					mediumVerticalImg.onload = handleMediumVerticalLoad;
+					break;
+				case "mediumBig":
+					var mediumBigHorizontalImg = new Image();
+					mediumBigHorizontalImg.src = "images/horizontalv1248x832.jpg";
+					mediumBigHorizontalImg.onload = handleMediumBigHorizontalLoad;
+			
+					var mediumBigVerticalImg = new Image();
+					mediumBigVerticalImg.src = "images/verticalv832x1248.jpg";
+					mediumBigVerticalImg.onload = handleMediumBigVerticalLoad;
+					break;
+				case "large":
+					var bigHorizontalImg = new Image();
+					bigHorizontalImg.src = "images/horizontalv1920x1280.jpg";
+					bigHorizontalImg.onload = handleBigHorizontalLoad;
+			
+					var bigVerticalImg = new Image();
+					bigVerticalImg.src = "images/verticalv1240x1860.jpg";
+					bigVerticalImg.onload = handleBigVerticalLoad;
+					break;
+			}
+		}
+		
+		function handleSmallHorizontalLoad(event) 
+		{
+			smallHorizontal = new createjs.Bitmap(event.currentTarget);
+			handleHorizontalLoad(smallHorizontal);
+		}
+		
+		function handleSmallVerticalLoad(event) 
+		{
+			smallVertical = new createjs.Bitmap(event.currentTarget);
+			handleVerticalLoad(smallVertical);
+		}
+		
+		function handleSmallMediumHorizontalLoad(event) 
+		{
+			smallMediumHorizontal = new createjs.Bitmap(event.currentTarget);
+			handleHorizontalLoad(smallMediumHorizontal)
+		}
+		
+		function handleSmallMediumVerticalLoad(event) 
+		{
+			smallMediumVertical = new createjs.Bitmap(event.currentTarget);
+			handleVerticalLoad(smallMediumVertical)
+		}
+		
+		function handleMediumHorizontalLoad(event) 
+		{
+			mediumHorizontal = new createjs.Bitmap(event.currentTarget);
+			handleHorizontalLoad(mediumHorizontal)
+		}
+		
+		function handleMediumVerticalLoad(event) 
+		{
+			mediumVertical = new createjs.Bitmap(event.currentTarget);
+			handleVerticalLoad(mediumVertical)
+		}
+		
+		function handleMediumBigHorizontalLoad(event) 
+		{
+			mediumBigHorizontal = new createjs.Bitmap(event.currentTarget);
+			handleHorizontalLoad(mediumBigHorizontal)
+		}
+		
+		function handleMediumBigVerticalLoad(event) 
+		{
+			mediumBigVertical = new createjs.Bitmap(event.currentTarget);
+			handleVerticalLoad(mediumBigVertical)
+		}
+		
+		function handleBigHorizontalLoad(event) 
+		{
+			bigHorizontal = new createjs.Bitmap(event.currentTarget);
+			handleHorizontalLoad(bigHorizontal)
+		}
+		
+		function handleBigVerticalLoad(event) 
+		{
+			bigVertical = new createjs.Bitmap(event.currentTarget);
+			handleVerticalLoad(bigVertical)
+		}
+		
+		function handleHorizontalLoad(bitmap) 
+		{
+			var loadWidth = bitmap.image.width;
+			var loadHeight = bitmap.image.height;
+			
+			if(orientationStr == "Landscape" && loadWidth == calculatedWidth)
+			{
+				content.addChild(bitmap);
+				handleImageLoad(content);
+			}
+		}
+		
+		function handleVerticalLoad(bitmap)  
+		{
+			var loadWidth = bitmap.image.width;
+			var loadHeight = bitmap.image.height;
+				
+			if(orientationStr == "Portrait" && loadWidth == calculatedWidth)
+			{
+				content.addChild(bitmap);
+				handleImageLoad(content);
+			}
+		}
+		function handleImageLoad(content) 
+		{
+			var totalWidth = document.documentElement.clientWidth;
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+			
+			if (screenWidth < totalWidth)
+			{
+				screenWidth = document.documentElement.clientWidth;
+				screenHeight = document.documentElement.clientHeight;
+			}
+
+			//scale = screenWidth / calculatedWidth;
+			var scaleX = screenWidth / calculatedWidth;
+			var scaleY = screenHeight / calculatedHeight;
+			console.log("scaleX: " + scaleX);
+			console.log("scaleY: " + scaleY);
+			
+			scale = Math.max(scaleX, scaleY);
+			
+			imageWidth = calculatedWidth * scale;
+			imageHeight = calculatedHeight * scale;
+			
+			console.log("imageWidth: " + imageWidth);
+			console.log("imageHeight: " + imageHeight);
+			console.log("screenWidth: " + screenWidth);
+			console.log("screenHeight: " + screenHeight);
+			console.log("scale: " + scale);
+			
+			content.scaleX = scale;
+			content.scaleY = scale;
+			
+			centerX = screenWidth - imageWidth;
+			centerY = screenHeight - imageHeight;
+			
+			console.log("centerX: " + centerX);
+			console.log("centerY: " + centerY);
+			
+			content.x = (centerX)/2;
+			content.y = (centerY)/2;
+			
+			stage.canvas.width = imageWidth;
+			stage.canvas.height = imageHeight;
+		}
+		
+		function resize(event) 
+		{
+			
+			resizeImage();
+			
+	    }
+		
+		function resizeImage() 
+		{
+			var lastSize = size;
+			var lastOrientation = orientationStr;
+			
+			setDimension();
+			
+			if (orientationStr != lastOrientation)
+			{
+				console.log("cambio orientacion");
+				
+				change();
+			}
+			else if (size != lastSize)
+			{
+				console.log("cambio tamaño");
+				
+				change();
+			}
+			else
+			{
+				handleImageLoad(content);
+			}
+		}
+		
+		function change() 
+		{
+			if(orientationStr == "Landscape")
+			{
+				changeHorizontal();
+			}
+			else
+			{
+				changeVertical();
+			}
+		}
+		
+		function changeHorizontal() 
+		{
+			switch (size) {
+				case "small":
+					console.log("cambio a horizontal pequeño");
+					changeContainer(smallHorizontal);
+					break;
+				case "smallMedium":
+					console.log("cambio a horizontal medio pequeño");
+					changeContainer(smallMediumHorizontal);
+					break;
+				case "medium":
+					console.log("cambio a horizontal medio");
+					changeContainer(mediumHorizontal);
+					break;
+				case "mediumBig":
+					console.log("cambio a horizontal medio grande");
+					changeContainer(mediumBigHorizontal);
+					break;
+				case "large":
+					console.log("cambio a horizontal grande");
+					changeContainer(bigHorizontal);
+					break;
+			}
+		}
+		
+		function changeVertical() 
+		{
+			switch (size) {
+				case "small":
+					console.log("cambio a vertical pequeño");
+					changeContainer(smallVertical);
+					break;
+				case "smallMedium":
+					console.log("cambio a vertical medio pequeño");
+					changeContainer(smallMediumVertical);
+					break;
+				case "medium":
+					console.log("cambio a vertical medio");
+					changeContainer(mediumVertical);
+					break;
+				case "mediumBig":
+					console.log("cambio a vertical medio grande");
+					changeContainer(mediumBigVertical);
+					break;
+				case "large":
+					console.log("cambio a vertical grande");
+					changeContainer(bigVertical);
+					break;
+			}
+		}
+		
+		function changeContainer(background) 
+		{
+			content.removeAllChildren();
+			
+			if (background)
+			{
+				content.addChild(background);
+			}
+			else
+			{
+				createContent();
+			}
+		}
+		
+		function tick() 
+		{
+			stage.update();
+		}
+	</script>
+	
+</head>
+
+<body onLoad="init();">
+	<canvas id="demoCanvas" width="500" height="600"  >
+		alternate content
+	</canvas>
+</body>
+
+</html>
