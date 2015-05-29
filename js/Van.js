@@ -70,19 +70,19 @@ p.handleVanLoad = function (event) {
 p.resizeIcons = function () {
 	switch (size) {
 		case "small":
-			this.resizeIcon(smallVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(smallVan, 36.44, 47.64, 15, 13.5);
 			break;
 		case "smallMedium":
-			this.resizeIcon(smallMediumVan, 36.44, 47.64, 43.1, 29.3);
+			this.resizeIcon(smallMediumVan, 36.44, 47.64, 15, 13.5);
 			break;
 		case "medium":
-			this.resizeIcon(mediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(mediumVan, 36.44, 47.64, 15, 13.5);
 			break;
 		case "mediumBig":
-			this.resizeIcon(mediumBigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(mediumBigVan, 36.44, 47.64, 15, 13.5);
 			break;
 		case "large":
-			this.resizeIcon(bigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(bigVan, 36.44, 47.64, 15, 13.5);
 			break;
 	}
 } ;
@@ -108,8 +108,8 @@ p.resizeIcon = function (bitmap, horizontalWidth, horizontalHeight, verticalWidt
 	}
 	else
 	{
-		bitmap.x = (calculatedWidth * verticalWidth/100) * scale; //276
-		bitmap.y = (calculatedHeight * verticalHeight/100) * scale; //281
+		bitmap.x = (calculatedWidth * verticalWidth/100);
+		bitmap.y = (calculatedHeight * verticalHeight/100);
 		bitmap.rotation = 9;
 	}
 
