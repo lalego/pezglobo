@@ -70,51 +70,37 @@ p.handleVanLoad = function (event) {
 p.resizeIcons = function () {
 	switch (size) {
 		case "small":
-			this.resizeIcon(this.smallVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(smallVan, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "smallMedium":
-			this.resizeIcon(smallMediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(smallMediumVan, 36.44, 47.64, 43.1, 29.3);
 			break;
 		case "medium":
-			this.resizeIcon(this.mediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(mediumVan, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "mediumBig":
-			this.resizeIcon(this.mediumBigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(mediumBigVan, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "large":
-			this.resizeIcon(this.bigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(bigVan, 53.9, 64.2, 43.1, 29.3);
 			break;
 	}
 } ;
 
 p.resizeIcon = function (bitmap, horizontalWidth, horizontalHeight, verticalWidth, verticalHeight) {		
-	var bitmapWidth = 91;
-	var bitmapHeight = 70;
-	var screenWidth = window.innerWidth;
-	var screenHeight = window.innerHeight;
-	var scaleX = screenWidth / bitmapWidth;
-	var scaleY = screenHeight / bitmapHeight;
-	bitmap.scaleX = scale;
-	bitmap.scaleY = scale;
+	var bitmapWidth = 427;
+	var bitmapHeight = 251
+
+	//bitmap.scaleX = scale;
+	//bitmap.scaleY = scale;
 	
 	if(orientationStr == 'Landscape')
 	{
-		var scaledX = (calculatedWidth * horizontalWidth/100) * scale;
-		var scaledY = (calculatedHeight * horizontalHeight/100) * scale;
-		
-		var recalculatedWidth = calculatedWidth + centerX/2;
-		var recalculatedHeight = calculatedHeight + centerY/2;
-		
 		var totalX = (calculatedWidth * horizontalWidth/100);
 		var totalY = (calculatedHeight * horizontalHeight/100);
 		
-		var recalculatedWidth = totalX + centerX;
-		var recalculatedHeight = totalY + centerY;
-		
-		//var prX = 670;
-		//var prY = 530;
-		var prX = 670;
-		var prY = 530;
+		var prX = 349.8;
+		var prY = 304.9;
 		
 		bitmap.x = totalX;
 		bitmap.y = totalY;

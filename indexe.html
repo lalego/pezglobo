@@ -51,6 +51,8 @@
 			
 			createContent();
 			
+			resizeContent();
+			
 			createjs.Ticker.addEventListener("tick", stage);
 		}
 		
@@ -137,9 +139,18 @@
 		}
 		
 		function createVan() 
-		{			
-			van = new Van(orientationStr, size); 
-			content.addChild(van);
+		{
+			if (! van)
+			{
+				van = new Van(orientationStr, size); 
+				content.addChild(van);
+			}
+			else
+			{
+				van.removeAllChildren();
+				van.setup();
+			}
+			
 		}
 		
 		function createIcons() 
@@ -147,14 +158,59 @@
 			createVan();
 		}
 		
+		function resizeContent() 
+		{
+			var totalWidth = document.documentElement.clientWidth;
+			var screenWidth = window.innerWidth;
+			var screenHeight = window.innerHeight;
+			
+			if (screenWidth < totalWidth)
+			{
+				screenWidth = document.documentElement.clientWidth;
+				screenHeight = document.documentElement.clientHeight;
+			}
+
+			//scale = screenWidth / calculatedWidth;
+			var scaleX = screenWidth / calculatedWidth;
+			var scaleY = screenHeight / calculatedHeight;
+			console.log("scaleX: " + scaleX);
+			console.log("scaleY: " + scaleY);
+			
+			scale = Math.max(scaleX, scaleY);
+			
+			imageWidth = calculatedWidth * scale;
+			imageHeight = calculatedHeight * scale;
+			
+			console.log("imageWidth: " + imageWidth);
+			console.log("imageHeight: " + imageHeight);
+			console.log("screenWidth: " + screenWidth);
+			console.log("screenHeight: " + screenHeight);
+			console.log("scale: " + scale);
+			
+			content.scaleX = scale;
+			content.scaleY = scale;
+			
+			centerX = screenWidth - imageWidth;
+			centerY = screenHeight - imageHeight;
+			
+			console.log("centerX: " + centerX);
+			console.log("centerY: " + centerY);
+			
+			content.x = (centerX)/2;
+			content.y = (centerY)/2;
+			
+			stage.canvas.width = imageWidth;
+			stage.canvas.height = imageHeight;
+		}
+		
 		function resize(event) 
 		{
+			//content.removeAllChildren();
 			
-			resizeImage();
-			
+			changeContent();
 	    }
 		
-		function resizeImage() 
+		function changeContent() 
 		{
 			var lastSize = size;
 			var lastOrientation = orientationStr;
@@ -174,7 +230,7 @@
 				change();
 			}
 
-			bg.handleImageLoad();
+			resizeContent();
 		}
 		
 		function change() 

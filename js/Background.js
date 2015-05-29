@@ -68,23 +68,23 @@ p.handleHorizontalLoad = function (event) {
 		switch (size) {
 			case "small":
 				bg.addChild(smallHorizontal);
-				bg.handleImageLoad();
+				createIcons();
 				break;
 			case "smallMedium":
 				bg.addChild(smallMediumHorizontal);
-				bg.handleImageLoad();
+				createIcons();
 				break;
 			case "medium":
 				bg.addChild(mediumHorizontal);
-				bg.handleImageLoad();
+				createIcons();
 				break;
 			case "mediumBig":
 				bg.addChild(mediumBigHorizontal);
-				bg.handleImageLoad();
+				createIcons();
 				break;
 			case "large":
 				bg.addChild(bigHorizontal);
-				bg.handleImageLoad();
+				createIcons();
 				break;
 		}
 	}
@@ -96,72 +96,26 @@ p.handleVerticalLoad = function (event) {
 		switch (size) {
 			case "small":
 				bg.addChild(smallVertical);
-				bg.handleImageLoad();
+				createIcons();
 				break;
 			case "smallMedium":
 				bg.addChild(smallMediumVertical);
-				bg.handleImageLoad();
+				createIcons();
 				break;
 			case "medium":
 				bg.addChild(mediumVertical);
-				this.handleImageLoad();
+				createIcons();
 				break;
 			case "mediumBig":
 				bg.addChild(mediumBigVertical);
-				bg.handleImageLoad();
+				createIcons();
 				break;
 			case "large":
 				bg.addChild(bigVertical);
-				bg.handleImageLoad();
+				createIcons();
 				break;
 		}
 	}
-} ;
-
-p.handleImageLoad = function () {		
-	var totalWidth = document.documentElement.clientWidth;
-	var screenWidth = window.innerWidth;
-	var screenHeight = window.innerHeight;
-	
-	if (screenWidth < totalWidth)
-	{
-		screenWidth = document.documentElement.clientWidth;
-		screenHeight = document.documentElement.clientHeight;
-	}
-
-	//scale = screenWidth / calculatedWidth;
-	var scaleX = screenWidth / calculatedWidth;
-	var scaleY = screenHeight / calculatedHeight;
-	console.log("scaleX: " + scaleX);
-	console.log("scaleY: " + scaleY);
-	
-	scale = Math.max(scaleX, scaleY);
-	
-	var contentWidth = calculatedWidth * scale;
-	var contentHeight = calculatedHeight * scale;
-	
-	console.log("contentWidth: " + contentWidth);
-	console.log("contentHeight: " + contentHeight);
-	console.log("screenWidth: " + screenWidth);
-	console.log("screenHeight: " + screenHeight);
-	console.log("scale: " + scale);
-	
-	content.scaleX = scale;
-	content.scaleY = scale;
-	
-	centerX = screenWidth - contentWidth;
-	centerY = screenHeight - contentHeight;
-	
-	console.log("centerX: " + centerX);
-	console.log("centerY: " + centerY);
-	
-	content.x = (centerX)/2;
-	content.y = (centerY)/2;
-	
-	stage.canvas.width = contentWidth;
-	stage.canvas.height = contentHeight;
-	
-	createIcons();
 } ;
 
 p.changeHorizontal = function () {		
@@ -215,15 +169,15 @@ p.changeVertical = function () {
 } ;
 
 p.changeContainer = function (background) {		
-	content.removeAllChildren();
+	this.removeAllChildren();
 			
 	if (background)
 	{
-		content.addChild(background);
+		this.addChild(background);
 	}
 	else
 	{
-		createContent();
+		this.setup();
 	}
 } ;
 
