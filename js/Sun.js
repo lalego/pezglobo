@@ -1,68 +1,68 @@
 (function() {
 
-function Van(orientationStr, size) {
+function Sun(orientationStr, size) {
 	this.Container_constructor();
 	
-	this.smallVan = null;
-	this.smallMediumVan = null;
-	this.mediumVan = null;
-	this.mediumBigVan = null;
-	this.bigVan = null;
+	this.smallSun = null;
+	this.smallMediumSun = null;
+	this.mediumSun = null;
+	this.mediumBigSun = null;
+	this.bigSun = null;
 	
 	this.orientationStr = orientationStr;
 	this.size = size;
 	
 	this.setup();
 }
-var p = createjs.extend(Van, createjs.Container);
+var p = createjs.extend(Sun, createjs.Container);
 
 
 p.setup = function() {
 	switch (size) {
 				case "small":
-					smallVan = new createjs.Bitmap("images/furgoneta285x168.png");
-					smallVan.image.onload = this.handleVanLoad;
+					smallSun = new createjs.Bitmap("images/furgoneta285x168.png");
+					smallSun.image.onload = this.handleSunLoad;
 					break;
 				case "smallMedium":
-					smallMediumVan = new createjs.Bitmap("images/furgoneta427x251.png");
-					smallMediumVan.image.onload = this.handleVanLoad;
+					smallMediumSun = new createjs.Bitmap("images/furgoneta427x251.png");
+					smallMediumSun.image.onload = this.handleSunLoad;
 					break;
 				case "medium":
-					mediumVan = new createjs.Bitmap("images/furgoneta569x335.png");
-					mediumVan.image.onload = this.handleVanLoad;
+					mediumSun = new createjs.Bitmap("images/furgoneta569x335.png");
+					mediumSun.image.onload = this.handleSunLoad;
 					break;
 				case "mediumBig":
-					mediumBigVan = new createjs.Bitmap("images/furgoneta740x436.png");
-					mediumBigVan.image.onload = this.handleVanLoad;
+					mediumBigSun = new createjs.Bitmap("images/furgoneta740x436.png");
+					mediumBigSun.image.onload = this.handleSunLoad;
 					break;
 				case "large":
-					bigVan = new createjs.Bitmap("images/furgoneta1138x670.png");
-					bigVan.image.onload = this.handleVanLoad;
+					bigSun = new createjs.Bitmap("images/furgoneta1138x670.png");
+					bigSun.image.onload = this.handleSunLoad;
 					break;
 			}
 } ;
 
-p.handleVanLoad = function (event) {
+p.handleSunLoad = function (event) {
 	switch (size) {
 		case "small":
-			van.addChild(smallVan);
-			van.resizeIcons();
+			sun.addChild(smallSun);
+			sun.resizeIcons();
 			break;
 		case "smallMedium":
-			van.addChild(smallMediumVan);
-			van.resizeIcons();
+			sun.addChild(smallMediumSun);
+			sun.resizeIcons();
 			break;
 		case "medium":
-			van.addChild(mediumVan);
-			van.resizeIcons();
+			sun.addChild(mediumSun);
+			sun.resizeIcons();
 			break;
 		case "mediumBig":
-			van.addChild(mediumBigVan);
-			van.resizeIcons();
+			sun.addChild(mediumBigSun);
+			sun.resizeIcons();
 			break;
 		case "large":
-			van.addChild(bigVan);
-			van.resizeIcons();
+			sun.addChild(bigSun);
+			sun.resizeIcons();
 			break;
 	}
 } ;
@@ -70,19 +70,19 @@ p.handleVanLoad = function (event) {
 p.resizeIcons = function () {
 	switch (size) {
 		case "small":
-			this.resizeIcon(this.smallVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.smallSun, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "smallMedium":
-			this.resizeIcon(smallMediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(smallMediumSun, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "medium":
-			this.resizeIcon(this.mediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.mediumSun, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "mediumBig":
-			this.resizeIcon(this.mediumBigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.mediumBigSun, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "large":
-			this.resizeIcon(this.bigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.bigSun, 53.9, 64.2, 43.1, 29.3);
 			break;
 	}
 } ;
@@ -133,9 +133,9 @@ p.changeVertical = function () {
 	
 }
 
-p.changeContainer = function (van) {		
+p.changeContainer = function (sun) {		
 	
 }
 
-window.Van = createjs.promote(Van, "Container");
+window.Sun = createjs.promote(Sun, "Container");
 }());

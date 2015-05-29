@@ -1,68 +1,68 @@
 (function() {
 
-function Van(orientationStr, size) {
+function Facebook(orientationStr, size) {
 	this.Container_constructor();
 	
-	this.smallVan = null;
-	this.smallMediumVan = null;
-	this.mediumVan = null;
-	this.mediumBigVan = null;
-	this.bigVan = null;
+	this.smallFacebook = null;
+	this.smallMediumFacebook = null;
+	this.mediumFacebook = null;
+	this.mediumBigFacebook = null;
+	this.bigFacebook = null;
 	
 	this.orientationStr = orientationStr;
 	this.size = size;
 	
 	this.setup();
 }
-var p = createjs.extend(Van, createjs.Container);
+var p = createjs.extend(Facebook, createjs.Container);
 
 
 p.setup = function() {
 	switch (size) {
 				case "small":
-					smallVan = new createjs.Bitmap("images/furgoneta285x168.png");
-					smallVan.image.onload = this.handleVanLoad;
+					smallFacebook = new createjs.Bitmap("images/facebook35x27.png");
+					smallFacebook.image.onload = this.handleFacebookLoad;
 					break;
 				case "smallMedium":
-					smallMediumVan = new createjs.Bitmap("images/furgoneta427x251.png");
-					smallMediumVan.image.onload = this.handleVanLoad;
+					smallMediumFacebook = new createjs.Bitmap("images/facebook53x41.png");
+					smallMediumFacebook.image.onload = this.handleFacebookLoad;
 					break;
 				case "medium":
-					mediumVan = new createjs.Bitmap("images/furgoneta569x335.png");
-					mediumVan.image.onload = this.handleVanLoad;
+					mediumFacebook = new createjs.Bitmap("images/facebook70x54.png");
+					mediumFacebook.image.onload = this.handleFacebookLoad;
 					break;
 				case "mediumBig":
-					mediumBigVan = new createjs.Bitmap("images/furgoneta740x436.png");
-					mediumBigVan.image.onload = this.handleVanLoad;
+					mediumBigFacebook = new createjs.Bitmap("images/facebook91x70.png");
+					mediumBigFacebook.image.onload = this.handleFacebookLoad;
 					break;
 				case "large":
-					bigVan = new createjs.Bitmap("images/furgoneta1138x670.png");
-					bigVan.image.onload = this.handleVanLoad;
+					bigFacebook = new createjs.Bitmap("images/facebook140x108.png");
+					bigFacebook.image.onload = this.handleFacebookLoad;
 					break;
 			}
 } ;
 
-p.handleVanLoad = function (event) {
+p.handleFacebookLoad = function (event) {
 	switch (size) {
 		case "small":
-			van.addChild(smallVan);
-			van.resizeIcons();
+			facebook.addChild(smallFacebook);
+			facebook.resizeIcons();
 			break;
 		case "smallMedium":
-			van.addChild(smallMediumVan);
-			van.resizeIcons();
+			facebook.addChild(smallMediumFacebook);
+			facebook.resizeIcons();
 			break;
 		case "medium":
-			van.addChild(mediumVan);
-			van.resizeIcons();
+			facebook.addChild(mediumFacebook);
+			facebook.resizeIcons();
 			break;
 		case "mediumBig":
-			van.addChild(mediumBigVan);
-			van.resizeIcons();
+			facebook.addChild(mediumBigFacebook);
+			facebook.resizeIcons();
 			break;
 		case "large":
-			van.addChild(bigVan);
-			van.resizeIcons();
+			facebook.addChild(bigFacebook);
+			facebook.resizeIcons();
 			break;
 	}
 } ;
@@ -70,19 +70,19 @@ p.handleVanLoad = function (event) {
 p.resizeIcons = function () {
 	switch (size) {
 		case "small":
-			this.resizeIcon(this.smallVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.smallFacebook, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "smallMedium":
-			this.resizeIcon(smallMediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(smallMediumFacebook, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "medium":
-			this.resizeIcon(this.mediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.mediumFacebook, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "mediumBig":
-			this.resizeIcon(this.mediumBigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.mediumBigFacebook, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "large":
-			this.resizeIcon(this.bigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.bigFacebook, 53.9, 64.2, 43.1, 29.3);
 			break;
 	}
 } ;
@@ -133,9 +133,9 @@ p.changeVertical = function () {
 	
 }
 
-p.changeContainer = function (van) {		
+p.changeContainer = function () {		
 	
 }
 
-window.Van = createjs.promote(Van, "Container");
+window.Facebook = createjs.promote(Facebook, "Container");
 }());

@@ -1,68 +1,68 @@
 (function() {
 
-function Van(orientationStr, size) {
+function Instangram(orientationStr, size) {
 	this.Container_constructor();
 	
-	this.smallVan = null;
-	this.smallMediumVan = null;
-	this.mediumVan = null;
-	this.mediumBigVan = null;
-	this.bigVan = null;
+	this.smallInstangram = null;
+	this.smallMediumInstangram = null;
+	this.mediumInstangram = null;
+	this.mediumBigInstangram = null;
+	this.bigInstangram = null;
 	
 	this.orientationStr = orientationStr;
 	this.size = size;
 	
 	this.setup();
 }
-var p = createjs.extend(Van, createjs.Container);
+var p = createjs.extend(Instangram, createjs.Container);
 
 
 p.setup = function() {
 	switch (size) {
 				case "small":
-					smallVan = new createjs.Bitmap("images/furgoneta285x168.png");
-					smallVan.image.onload = this.handleVanLoad;
+					smallInstangram = new createjs.Bitmap("images/furgoneta285x168.png");
+					smallInstangram.image.onload = this.handleInstangramLoad;
 					break;
 				case "smallMedium":
-					smallMediumVan = new createjs.Bitmap("images/furgoneta427x251.png");
-					smallMediumVan.image.onload = this.handleVanLoad;
+					smallMediumInstangram = new createjs.Bitmap("images/furgoneta427x251.png");
+					smallMediumInstangram.image.onload = this.handleInstangramLoad;
 					break;
 				case "medium":
-					mediumVan = new createjs.Bitmap("images/furgoneta569x335.png");
-					mediumVan.image.onload = this.handleVanLoad;
+					mediumInstangram = new createjs.Bitmap("images/furgoneta569x335.png");
+					mediumInstangram.image.onload = this.handleInstangramLoad;
 					break;
 				case "mediumBig":
-					mediumBigVan = new createjs.Bitmap("images/furgoneta740x436.png");
-					mediumBigVan.image.onload = this.handleVanLoad;
+					mediumBigInstangram = new createjs.Bitmap("images/furgoneta740x436.png");
+					mediumBigInstangram.image.onload = this.handleInstangramLoad;
 					break;
 				case "large":
-					bigVan = new createjs.Bitmap("images/furgoneta1138x670.png");
-					bigVan.image.onload = this.handleVanLoad;
+					bigInstangram = new createjs.Bitmap("images/furgoneta1138x670.png");
+					bigInstangram.image.onload = this.handleInstangramLoad;
 					break;
 			}
 } ;
 
-p.handleVanLoad = function (event) {
+p.handleInstangramLoad = function (event) {
 	switch (size) {
 		case "small":
-			van.addChild(smallVan);
-			van.resizeIcons();
+			instangram.addChild(smallInstangram);
+			instangram.resizeIcons();
 			break;
 		case "smallMedium":
-			van.addChild(smallMediumVan);
-			van.resizeIcons();
+			instangram.addChild(smallMediumInstangram);
+			instangram.resizeIcons();
 			break;
 		case "medium":
-			van.addChild(mediumVan);
-			van.resizeIcons();
+			instangram.addChild(mediumInstangram);
+			instangram.resizeIcons();
 			break;
 		case "mediumBig":
-			van.addChild(mediumBigVan);
-			van.resizeIcons();
+			instangram.addChild(mediumBigInstangram);
+			instangram.resizeIcons();
 			break;
 		case "large":
-			van.addChild(bigVan);
-			van.resizeIcons();
+			instangram.addChild(bigInstangram);
+			instangram.resizeIcons();
 			break;
 	}
 } ;
@@ -70,19 +70,19 @@ p.handleVanLoad = function (event) {
 p.resizeIcons = function () {
 	switch (size) {
 		case "small":
-			this.resizeIcon(this.smallVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.smallInstangram, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "smallMedium":
-			this.resizeIcon(smallMediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(smallMediumInstangram, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "medium":
-			this.resizeIcon(this.mediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.mediumInstangram, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "mediumBig":
-			this.resizeIcon(this.mediumBigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.mediumBigInstangram, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "large":
-			this.resizeIcon(this.bigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.bigInstangram, 53.9, 64.2, 43.1, 29.3);
 			break;
 	}
 } ;
@@ -133,9 +133,9 @@ p.changeVertical = function () {
 	
 }
 
-p.changeContainer = function (van) {		
+p.changeContainer = function (instangram) {		
 	
 }
 
-window.Van = createjs.promote(Van, "Container");
+window.Instangram = createjs.promote(Instangram, "Container");
 }());

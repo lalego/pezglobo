@@ -15,9 +15,15 @@
 		}
 	</style>
 
-	<script src="https://code.createjs.com/createjs-2014.12.12.min.js"></script>
-	<script src="Background.js"></script>
-	<script src="Van.js"></script>
+	<script src="https://code.createjs.com/createjs-2015.05.21.min.js"></script>
+	<script src="js/Background.js"></script>
+	<script src="js/Van.js"></script>
+	<script src="js/Facebook.js"></script>
+	<script src="js/Twitter.js"></script>
+	<script src="js/Instangram.js"></script>
+	<script src="js/Youtube.js"></script>
+	<script src="js/Sun.js"></script>
+	<script src="js/Post.js"></script>
 
 	<script>
 		var stage, content;
@@ -136,6 +142,11 @@
 			content.addChild(van);
 		}
 		
+		function createIcons() 
+		{	
+			createVan();
+		}
+		
 		function resize(event) 
 		{
 			
@@ -163,7 +174,7 @@
 				change();
 			}
 
-			handleImageLoad();
+			bg.handleImageLoad();
 		}
 		
 		function change() 

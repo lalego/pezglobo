@@ -1,68 +1,68 @@
 (function() {
 
-function Van(orientationStr, size) {
+function Youtube(orientationStr, size) {
 	this.Container_constructor();
 	
-	this.smallVan = null;
-	this.smallMediumVan = null;
-	this.mediumVan = null;
-	this.mediumBigVan = null;
-	this.bigVan = null;
+	this.smallYoutube = null;
+	this.smallMediumYoutube = null;
+	this.mediumYoutube = null;
+	this.mediumBigYoutube = null;
+	this.bigYoutube = null;
 	
 	this.orientationStr = orientationStr;
 	this.size = size;
 	
 	this.setup();
 }
-var p = createjs.extend(Van, createjs.Container);
+var p = createjs.extend(Youtube, createjs.Container);
 
 
 p.setup = function() {
 	switch (size) {
 				case "small":
-					smallVan = new createjs.Bitmap("images/furgoneta285x168.png");
-					smallVan.image.onload = this.handleVanLoad;
+					smallYoutube = new createjs.Bitmap("images/furgoneta285x168.png");
+					smallYoutube.image.onload = this.handleYoutubeLoad;
 					break;
 				case "smallMedium":
-					smallMediumVan = new createjs.Bitmap("images/furgoneta427x251.png");
-					smallMediumVan.image.onload = this.handleVanLoad;
+					smallMediumYoutube = new createjs.Bitmap("images/furgoneta427x251.png");
+					smallMediumYoutube.image.onload = this.handleYoutubeLoad;
 					break;
 				case "medium":
-					mediumVan = new createjs.Bitmap("images/furgoneta569x335.png");
-					mediumVan.image.onload = this.handleVanLoad;
+					mediumYoutube = new createjs.Bitmap("images/furgoneta569x335.png");
+					mediumYoutube.image.onload = this.handleYoutubeLoad;
 					break;
 				case "mediumBig":
-					mediumBigVan = new createjs.Bitmap("images/furgoneta740x436.png");
-					mediumBigVan.image.onload = this.handleVanLoad;
+					mediumBigYoutube = new createjs.Bitmap("images/furgoneta740x436.png");
+					mediumBigYoutube.image.onload = this.handleYoutubeLoad;
 					break;
 				case "large":
-					bigVan = new createjs.Bitmap("images/furgoneta1138x670.png");
-					bigVan.image.onload = this.handleVanLoad;
+					bigYoutube = new createjs.Bitmap("images/furgoneta1138x670.png");
+					bigYoutube.image.onload = this.handleYoutubeLoad;
 					break;
 			}
 } ;
 
-p.handleVanLoad = function (event) {
+p.handleYoutubeLoad = function (event) {
 	switch (size) {
 		case "small":
-			van.addChild(smallVan);
-			van.resizeIcons();
+			youtube.addChild(smallYoutube);
+			youtube.resizeIcons();
 			break;
 		case "smallMedium":
-			van.addChild(smallMediumVan);
-			van.resizeIcons();
+			youtube.addChild(smallMediumYoutube);
+			youtube.resizeIcons();
 			break;
 		case "medium":
-			van.addChild(mediumVan);
-			van.resizeIcons();
+			youtube.addChild(mediumYoutube);
+			youtube.resizeIcons();
 			break;
 		case "mediumBig":
-			van.addChild(mediumBigVan);
-			van.resizeIcons();
+			youtube.addChild(mediumBigYoutube);
+			youtube.resizeIcons();
 			break;
 		case "large":
-			van.addChild(bigVan);
-			van.resizeIcons();
+			youtube.addChild(bigYoutube);
+			youtube.resizeIcons();
 			break;
 	}
 } ;
@@ -70,19 +70,19 @@ p.handleVanLoad = function (event) {
 p.resizeIcons = function () {
 	switch (size) {
 		case "small":
-			this.resizeIcon(this.smallVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.smallYoutube, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "smallMedium":
-			this.resizeIcon(smallMediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(smallMediumYoutube, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "medium":
-			this.resizeIcon(this.mediumVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.mediumYoutube, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "mediumBig":
-			this.resizeIcon(this.mediumBigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.mediumBigYoutube, 53.9, 64.2, 43.1, 29.3);
 			break;
 		case "large":
-			this.resizeIcon(this.bigVan, 53.9, 64.2, 43.1, 29.3);
+			this.resizeIcon(this.bigYoutube, 53.9, 64.2, 43.1, 29.3);
 			break;
 	}
 } ;
@@ -133,9 +133,9 @@ p.changeVertical = function () {
 	
 }
 
-p.changeContainer = function (van) {		
+p.changeContainer = function (youtube) {		
 	
 }
 
-window.Van = createjs.promote(Van, "Container");
+window.Youtube = createjs.promote(Youtube, "Container");
 }());
