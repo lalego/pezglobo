@@ -46,81 +46,41 @@ p.handleVanLoad = function (event) {
 	switch (size) {
 		case "small":
 			van.addChild(smallVan);
-			van.resizeIcons();
+			van.resizeIcon(smallVan);
 			break;
 		case "smallMedium":
 			van.addChild(smallMediumVan);
-			van.resizeIcons();
+			van.resizeIcon(smallMediumVan);
 			break;
 		case "medium":
 			van.addChild(mediumVan);
-			van.resizeIcons();
+			van.resizeIcon(mediumVan);
 			break;
 		case "mediumBig":
 			van.addChild(mediumBigVan);
-			van.resizeIcons();
+			van.resizeIcon(mediumBigVan);
 			break;
 		case "large":
 			van.addChild(bigVan);
-			van.resizeIcons();
+			van.resizeIcon(bigVan);
 			break;
 	}
 } ;
 
-p.resizeIcons = function () {
-	switch (size) {
-		case "small":
-			this.resizeIcon(smallVan, 36.44, 47.64, 15, 13.5);
-			break;
-		case "smallMedium":
-			this.resizeIcon(smallMediumVan, 36.44, 47.64, 15, 13.5);
-			break;
-		case "medium":
-			this.resizeIcon(mediumVan, 36.44, 47.64, 15, 13.5);
-			break;
-		case "mediumBig":
-			this.resizeIcon(mediumBigVan, 36.44, 47.64, 15, 13.5);
-			break;
-		case "large":
-			this.resizeIcon(bigVan, 36.44, 47.64, 15, 13.5);
-			break;
-	}
-} ;
-
-p.resizeIcon = function (bitmap, horizontalWidth, horizontalHeight, verticalWidth, verticalHeight) {		
-	var bitmapWidth = 427;
-	var bitmapHeight = 251
-
-	//bitmap.scaleX = scale;
-	//bitmap.scaleY = scale;
-	
+p.resizeIcon = function (bitmap) {		
 	if(orientationStr == 'Landscape')
 	{
-		var totalX = (calculatedWidth * horizontalWidth/100);
-		var totalY = (calculatedHeight * horizontalHeight/100);
-		
-		var prX = 349.8;
-		var prY = 304.9;
-		
-		bitmap.x = totalX;
-		bitmap.y = totalY;
+		bitmap.x = 349.8;
+		bitmap.y = 304.9;
 		bitmap.rotation = 0;
 	}
 	else
 	{
-		bitmap.x = (calculatedWidth * verticalWidth/100);
-		bitmap.y = (calculatedHeight * verticalHeight/100);
+		bitmap.x = 49.3;
+		bitmap.y = 129.6;
 		bitmap.rotation = 9;
 	}
 
-}
-
-p.changeVertical = function () {
-	
-}
-
-p.changeContainer = function (van) {		
-	
 }
 
 window.Van = createjs.promote(Van, "Container");

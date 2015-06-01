@@ -138,6 +138,12 @@
 			content.addChild(bg);
 		}
 		
+		function createIcons() 
+		{	
+			createVan();
+			createSun();
+		}
+		
 		function createVan() 
 		{
 			if (! van)
@@ -153,9 +159,19 @@
 			
 		}
 		
-		function createIcons() 
-		{	
-			createVan();
+		function createSun() 
+		{
+			if (! sun)
+			{
+				sun = new Sun(orientationStr, size); 
+				content.addChild(sun);
+			}
+			else
+			{
+				van.removeAllChildren();
+				van.setup();
+			}
+			
 		}
 		
 		function resizeContent() 
