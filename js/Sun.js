@@ -72,13 +72,13 @@ p.resizeIcon = function (bitmap) {
 	{
 		bitmap.x = 837;
 		bitmap.y = 0;
-		bitmap.skewX = 0;
+		bitmap.scaleX = 1;
 	}
 	else
 	{
-		bitmap.x = 0
-		bitmap.y = 0
-		bitmap.skewX = 1;
+		bitmap.x = 62;
+		bitmap.y = 0;
+		bitmap.scaleX = -1;
 	}
 
 }
