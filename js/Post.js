@@ -20,23 +20,23 @@ var p = createjs.extend(Post, createjs.Container);
 p.setup = function() {
 	switch (size) {
 				case "small":
-					smallPost = new createjs.Bitmap("images/furgoneta285x168.png");
+					smallPost = new createjs.Bitmap("images/postepez86x230.png");
 					smallPost.image.onload = this.handlePostLoad;
 					break;
 				case "smallMedium":
-					smallMediumPost = new createjs.Bitmap("images/furgoneta427x251.png");
+					smallMediumPost = new createjs.Bitmap("images/postepez128x342.png");
 					smallMediumPost.image.onload = this.handlePostLoad;
 					break;
 				case "medium":
-					mediumPost = new createjs.Bitmap("images/furgoneta569x335.png");
+					mediumPost = new createjs.Bitmap("images/postepez171x457.png");
 					mediumPost.image.onload = this.handlePostLoad;
 					break;
 				case "mediumBig":
-					mediumBigPost = new createjs.Bitmap("images/furgoneta740x436.png");
+					mediumBigPost = new createjs.Bitmap("images/postepez222x593.png");
 					mediumBigPost.image.onload = this.handlePostLoad;
 					break;
 				case "large":
-					bigPost = new createjs.Bitmap("images/furgoneta1138x670.png");
+					bigPost = new createjs.Bitmap("images/postepez342x914.png");
 					bigPost.image.onload = this.handlePostLoad;
 					break;
 			}
@@ -46,85 +46,37 @@ p.handlePostLoad = function (event) {
 	switch (size) {
 		case "small":
 			post.addChild(smallPost);
-			post.resizeIcons();
+			post.resizeIcon(smallPost);
 			break;
 		case "smallMedium":
 			post.addChild(smallMediumPost);
-			post.resizeIcons();
+			post.resizeIcon(smallMediumPost);
 			break;
 		case "medium":
 			post.addChild(mediumPost);
-			post.resizeIcons();
+			post.resizeIcon(mediumPost);
 			break;
 		case "mediumBig":
 			post.addChild(mediumBigPost);
-			post.resizeIcons();
+			post.resizeIcon(mediumBigPost);
 			break;
 		case "large":
 			post.addChild(bigPost);
-			post.resizeIcons();
+			post.resizeIcon(bigPost);
 			break;
 	}
 } ;
 
-p.resizeIcons = function () {
-	switch (size) {
-		case "small":
-			this.resizeIcon(this.smallPost, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "smallMedium":
-			this.resizeIcon(smallMediumPost, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "medium":
-			this.resizeIcon(this.mediumPost, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "mediumBig":
-			this.resizeIcon(this.mediumBigPost, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "large":
-			this.resizeIcon(this.bigPost, 53.9, 64.2, 43.1, 29.3);
-			break;
-	}
-} ;
-
-p.resizeIcon = function (bitmap, horizontalWidth, horizontalHeight, verticalWidth, verticalHeight) {		
-	var bitmapWidth = 91;
-	var bitmapHeight = 70;
-	var screenWidth = window.innerWidth;
-	var screenHeight = window.innerHeight;
-	var scaleX = screenWidth / bitmapWidth;
-	var scaleY = screenHeight / bitmapHeight;
-	bitmap.scaleX = scale;
-	bitmap.scaleY = scale;
-	
+p.resizeIcon = function (bitmap) {		
 	if(orientationStr == 'Landscape')
 	{
-		var scaledX = (calculatedWidth * horizontalWidth/100) * scale;
-		var scaledY = (calculatedHeight * horizontalHeight/100) * scale;
-		
-		var recalculatedWidth = calculatedWidth + centerX/2;
-		var recalculatedHeight = calculatedHeight + centerY/2;
-		
-		var totalX = (calculatedWidth * horizontalWidth/100);
-		var totalY = (calculatedHeight * horizontalHeight/100);
-		
-		var recalculatedWidth = totalX + centerX;
-		var recalculatedHeight = totalY + centerY;
-		
-		//var prX = 670;
-		//var prY = 530;
-		var prX = 670;
-		var prY = 530;
-		
-		bitmap.x = totalX;
-		bitmap.y = totalY;
-		bitmap.rotation = 0;
+		bitmap.x = 86;
+		bitmap.y = 220;
 	}
 	else
 	{
-		bitmap.x = (calculatedWidth * verticalWidth/100) * scale; //276
-		bitmap.y = (calculatedHeight * verticalHeight/100) * scale; //281
-		bitmap.rotation = 9;
+		bitmap.x = 18;
+		bitmap.y = 503;
 	}
 
 }
