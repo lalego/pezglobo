@@ -19,27 +19,27 @@ var p = createjs.extend(Post, createjs.Container);
 
 p.setup = function() {
 	switch (size) {
-				case "small":
-					smallPost = new createjs.Bitmap("images/postepez86x230.png");
-					smallPost.image.onload = this.handlePostLoad;
-					break;
-				case "smallMedium":
-					smallMediumPost = new createjs.Bitmap("images/postepez128x342.png");
-					smallMediumPost.image.onload = this.handlePostLoad;
-					break;
-				case "medium":
-					mediumPost = new createjs.Bitmap("images/postepez171x457.png");
-					mediumPost.image.onload = this.handlePostLoad;
-					break;
-				case "mediumBig":
-					mediumBigPost = new createjs.Bitmap("images/postepez222x593.png");
-					mediumBigPost.image.onload = this.handlePostLoad;
-					break;
-				case "large":
-					bigPost = new createjs.Bitmap("images/postepez342x914.png");
-					bigPost.image.onload = this.handlePostLoad;
-					break;
-			}
+		case "small":
+			smallPost = new createjs.Bitmap("images/postepez86x230.png");
+			smallPost.image.onload = this.handlePostLoad;
+			break;
+		case "smallMedium":
+			smallMediumPost = new createjs.Bitmap("images/postepez128x342.png");
+			smallMediumPost.image.onload = this.handlePostLoad;
+			break;
+		case "medium":
+			mediumPost = new createjs.Bitmap("images/postepez171x457.png");
+			mediumPost.image.onload = this.handlePostLoad;
+			break;
+		case "mediumBig":
+			mediumBigPost = new createjs.Bitmap("images/postepez222x593.png");
+			mediumBigPost.image.onload = this.handlePostLoad;
+			break;
+		case "large":
+			bigPost = new createjs.Bitmap("images/postepez342x914.png");
+			bigPost.image.onload = this.handlePostLoad;
+			break;
+	}
 } ;
 
 p.handlePostLoad = function (event) {
