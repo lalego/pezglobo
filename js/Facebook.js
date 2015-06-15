@@ -49,33 +49,40 @@ p.handleFacebookLoad = function (event) {
 	
 	switch (size) {
 		case "small":
+			var smallVan = van.getChildByName("smallVan");
 			facebook.addChild(smallFacebook);
-			facebook.resizeIcon(smallFacebook);
+			facebook.resizeIcon(smallFacebook, smallVan);
 			break;
 		case "smallMedium":
+			var smallMediumVan = van.getChildByName("smallMediumVan");
 			facebook.addChild(smallMediumFacebook);
-			facebook.resizeIcon(smallMediumFacebook);
+			facebook.resizeIcon(smallMediumFacebook, smallMediumVan);
 			break;
 		case "medium":
+			var mediumVan = van.getChildByName("mediumVan");
 			facebook.addChild(mediumFacebook);
-			facebook.resizeIcon(mediumFacebook);
+			facebook.resizeIcon(mediumFacebook, mediumVan);
 			break;
 		case "mediumBig":
+			var mediumBigVan = van.getChildByName("mediumBigVan");
 			facebook.addChild(mediumBigFacebook);
-			facebook.resizeIcon(mediumBigFacebook);
+			facebook.resizeIcon(mediumBigFacebook, mediumBigVan);
 			break;
 		case "large":
+			var bigVan = van.getChildByName("bigVan");
 			facebook.addChild(bigFacebook);
-			facebook.resizeIcon(bigFacebook);
+			facebook.resizeIcon(bigFacebook, bigVan);
 			break;
 	}
 } ;
 
-p.resizeIcon = function (bitmap) {		
+p.resizeIcon = function (bitmap, bitmapVan) {
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = van.x + 168;
-		bitmap.y = van.y + 106;
+		bitmap.x = bitmapVan.x + 168;
+		//bitmap.x = 168;
+		bitmap.y = bitmapVan.y + 106;
+		//bitmap.y = 106;
 		bitmap.rotation = 0;
 	}
 	else

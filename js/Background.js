@@ -25,41 +25,126 @@ var p = createjs.extend(Background, createjs.Container);
 p.setup = function() {
 	switch (size) {
 		case "small":
-			smallHorizontal = new createjs.Bitmap("images/horizontalv480x320.jpg");
-			smallHorizontal.image.onload = this.handleHorizontalLoad;
-	
-			smallVertical = new createjs.Bitmap("images/verticalv320x480.jpg");
-			smallVertical.image.onload = this.handleVerticalLoad;
+			if (this.smallMediumHorizontal)
+			{
+				this.addBitmap(this.smallMediumHorizontal);
+			}
+			else
+			{
+				this.smallHorizontal = new createjs.Bitmap("images/horizontalv480x320.jpg");
+				this.smallHorizontal.image.onload = this.handleHorizontalLoad;
+				this.smallHorizontal.name = "smallHorizontal";
+			}
+			
+			if (this.smallVertical)
+			{
+				this.addBitmap(this.smallVertical);
+			}
+			else
+			{
+				this.smallVertical = new createjs.Bitmap("images/verticalv320x480.jpg");
+				this.smallVertical.image.onload = this.handleVerticalLoad;
+				this.smallVertical.name = "smallVertical";
+			}
 			break;
 		case "smallMedium":
-			smallMediumHorizontal = new createjs.Bitmap("images/horizontalv720x480.jpg");
-			smallMediumHorizontal.image.onload = this.handleHorizontalLoad;
+			if (this.smallMediumHorizontal)
+			{
+				this.addBitmap(this.smallMediumHorizontal);
+			}
+			else
+			{
+				this.smallMediumHorizontal = new createjs.Bitmap("images/horizontalv720x480.jpg");
+				this.smallMediumHorizontal.image.onload = this.handleHorizontalLoad;
+				this.smallMediumHorizontal.name = "smallMediumHorizontal";
+			}
 			
-			smallMediumVertical = new createjs.Bitmap("images/verticalv480x720.jpg");
-			smallMediumVertical.image.onload = this.handleVerticalLoad;
+			if (this.smallMediumVertical)
+			{
+				this.addBitmap(this.smallMediumVertical);
+			}
+			else
+			{
+				this.smallMediumVertical = new createjs.Bitmap("images/verticalv480x720.jpg");
+				this.smallMediumVertical.image.onload = this.handleVerticalLoad;
+				this.smallMediumVertical.name = "smallMediumVertical";
+			}
 			break;
 		case "medium":
-			mediumHorizontal = new createjs.Bitmap("images/horizontalv960x640.jpg");
-			mediumHorizontal.image.onload = this.handleHorizontalLoad;
+			if (this.mediumHorizontal)
+			{
+				this.addBitmap(this.mediumHorizontal);
+			}
+			else
+			{
+				this.mediumHorizontal = new createjs.Bitmap("images/horizontalv960x640.jpg");
+				this.mediumHorizontal.image.onload = this.handleHorizontalLoad;
+				this.mediumHorizontal.name = "mediumHorizontal";
+			}
 			
-			mediumVertical = new createjs.Bitmap("images/verticalv640x960.jpg");
-			mediumVertical.image.onload = this.handleVerticalLoad;
+			if (this.mediumVertical)
+			{
+				this.addBitmap(this.mediumVertical);
+			}
+			else
+			{
+				this.mediumVertical = new createjs.Bitmap("images/verticalv640x960.jpg");
+				this.mediumVertical.image.onload = this.handleVerticalLoad;
+				this.mediumVertical.name = "mediumVertical";
+			}
 			break;
 		case "mediumBig":
-			mediumBigHorizontal = new createjs.Bitmap("images/horizontalv1248x832.jpg");
-			mediumBigHorizontal.image.onload = this.handleHorizontalLoad;
-	
-			mediumBigVertical = new createjs.Bitmap("images/verticalv832x1248.jpg");
-			mediumBigVertical.image.onload = this.handleVerticalLoad;
+			if (this.mediumBigHorizontal)
+			{
+				this.addBitmap(this.mediumBigHorizontal);
+			}
+			else
+			{
+				this.mediumBigHorizontal = new createjs.Bitmap("images/horizontalv1248x832.jpg");
+				this.mediumBigHorizontal.image.onload = this.handleHorizontalLoad;
+				this.mediumBigHorizontal.name = "mediumBigHorizontal";
+			}
+			
+			if (this.mediumBigVertical)
+			{
+				this.addBitmap(mediumBigVertical);
+			}
+			else
+			{
+				this.mediumBigVertical = new createjs.Bitmap("images/verticalv832x1248.jpg");
+				this.mediumBigVertical.image.onload = this.handleVerticalLoad;
+				this.mediumBigVertical.name = "mediumBigVertical";
+			}
 			break;
 		case "large":
-			bigHorizontal = new createjs.Bitmap("images/horizontalv1920x1280.jpg");
-			bigHorizontal.image.onload = this.handleHorizontalLoad;
-	
-			bigVertical = new createjs.Bitmap("images/verticalv1240x1860.jpg");
-			bigVertical.image.onload = this.handleVerticalLoad;
+			if (this.bigHorizontal)
+			{
+				this.addBitmap(this.bigHorizontal);
+			}
+			else
+			{
+				this.bigHorizontal = new createjs.Bitmap("images/horizontalv1920x1280.jpg");
+				this.bigHorizontal.image.onload = this.handleHorizontalLoad;
+				this.bigHorizontal.name = "bigHorizontal";
+			}
+			
+			if (this.bigVertical)
+			{
+				this.addBitmap(this.bigVertical);
+			}
+			else
+			{
+				this.bigVertical = new createjs.Bitmap("images/verticalv1240x1860.jpg");
+				this.bigVertical.image.onload = this.handleVerticalLoad;
+				this.bigVertical.name = "bigVertical";
+			}
 			break;
 	}
+} ;
+
+p.addBitmap = function (bitmap) {
+	this.addChild(bitmap);
+	createIcons();
 } ;
 
 p.handleHorizontalLoad = function (event) {
@@ -67,24 +152,19 @@ p.handleHorizontalLoad = function (event) {
 	{
 		switch (size) {
 			case "small":
-				bg.addChild(smallHorizontal);
-				createIcons();
+				bg.addBitmap(bg.smallHorizontal);
 				break;
 			case "smallMedium":
-				bg.addChild(smallMediumHorizontal);
-				createIcons();
+				bg.addBitmap(bg.smallMediumHorizontal);
 				break;
 			case "medium":
-				bg.addChild(mediumHorizontal);
-				createIcons();
+				bg.addBitmap(bg.mediumHorizontal);
 				break;
 			case "mediumBig":
-				bg.addChild(mediumBigHorizontal);
-				createIcons();
+				bg.addBitmap(bg.mediumBigHorizontal);
 				break;
 			case "large":
-				bg.addChild(bigHorizontal);
-				createIcons();
+				bg.addBitmap(bg.bigHorizontal);
 				break;
 		}
 	}
@@ -95,24 +175,19 @@ p.handleVerticalLoad = function (event) {
 	{
 		switch (size) {
 			case "small":
-				bg.addChild(smallVertical);
-				createIcons();
+				bg.addBitmap(bg.smallVertical);
 				break;
 			case "smallMedium":
-				bg.addChild(smallMediumVertical);
-				createIcons();
+				bg.addBitmap(bg.smallMediumVertical);
 				break;
 			case "medium":
-				bg.addChild(mediumVertical);
-				createIcons();
+				bg.addBitmap(bg.mediumVertical);
 				break;
 			case "mediumBig":
-				bg.addChild(mediumBigVertical);
-				createIcons();
+				bg.addBitmap(bg.mediumBigVertical);
 				break;
 			case "large":
-				bg.addChild(bigVertical);
-				createIcons();
+				bg.addBitmap(bg.bigVertical);
 				break;
 		}
 	}
@@ -173,7 +248,7 @@ p.changeContainer = function (background) {
 			
 	if (background)
 	{
-		this.addChild(background);
+		this.addBitmap(background);
 	}
 	else
 	{

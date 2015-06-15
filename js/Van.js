@@ -27,22 +27,27 @@ p.setup = function() {
 		case "small":
 			smallVan = new createjs.Bitmap("images/furgoneta285x168.png");
 			smallVan.image.onload = this.handleVanLoad;
+			smallVan.name = "smallVan";
 			break;
 		case "smallMedium":
 			smallMediumVan = new createjs.Bitmap("images/furgoneta427x251.png");
 			smallMediumVan.image.onload = this.handleVanLoad;
+			smallMediumVan.name = "smallMediumVan";
 			break;
 		case "medium":
 			mediumVan = new createjs.Bitmap("images/furgoneta569x335.png");
 			mediumVan.image.onload = this.handleVanLoad;
+			mediumVan.name = "mediumVan";
 			break;
 		case "mediumBig":
 			mediumBigVan = new createjs.Bitmap("images/furgoneta740x436.png");
 			mediumBigVan.image.onload = this.handleVanLoad;
+			mediumBigVan.name = "mediumBigVan";
 			break;
 		case "large":
 			bigVan = new createjs.Bitmap("images/furgoneta1138x670.png");
 			bigVan.image.onload = this.handleVanLoad;
+			bigVan.name = "bigVan";
 			break;
 	}
 } ;
@@ -85,13 +90,14 @@ p.createFacebook = function () {
 	if (! this.facebook)
 	{
 		this.facebook = new Facebook(orientationStr, size); 
-		this.addChild(this.facebook);
 	}
 	else
 	{
 		this.facebook.removeAllChildren();
 		this.facebook.setup();
 	}
+	
+	this.addChild(this.facebook);
 } ;
 
 p.createTwitter = function () {		
@@ -147,6 +153,7 @@ p.resizeIcon = function (bitmap) {
 		bitmap.rotation = 9;
 	}
 
+	tick();
 } ;
 
 window.Van = createjs.promote(Van, "Container");
