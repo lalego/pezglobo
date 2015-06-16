@@ -13,6 +13,7 @@ function Van(orientationStr, size) {
 	this.twitter = null;
 	this.instangram = null;
 	this.youtube = null;
+	this.skull = null;
 	
 	this.orientationStr = orientationStr;
 	this.size = size;
@@ -118,6 +119,7 @@ p.createWindows = function () {
 	this.createTwitter();
 	this.createInstangram();
 	this.createYoutube();
+	this.createSkull();
 } ;
 
 p.createFacebook = function () {		
@@ -174,6 +176,20 @@ p.createYoutube = function () {
 	}
 	
 	this.addChild(this.youtube);
+} ;
+
+p.createSkull = function () {		
+	if (! this.skull)
+	{
+		this.skull = new Skull(orientationStr, size); 
+	}
+	else
+	{
+		this.skull.removeAllChildren();
+		this.skull.setup();
+	}
+	
+	this.addChild(this.skull);
 } ;
 
 p.resizeIcon = function (bitmap) {		
