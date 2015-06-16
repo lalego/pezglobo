@@ -25,64 +25,98 @@ var p = createjs.extend(Van, createjs.Container);
 p.setup = function() {
 	switch (size) {
 		case "small":
-			smallVan = new createjs.Bitmap("images/furgoneta285x168.png");
-			smallVan.image.onload = this.handleVanLoad;
-			smallVan.name = "smallVan";
+			if (this.smallVan)
+			{
+				this.addBitmap(this.smallVan);
+			}
+			else
+			{
+				this.smallVan = new createjs.Bitmap("images/furgoneta285x168.png");
+				this.smallVan.image.onload = this.handleVanLoad;
+				this.smallVan.name = "smallVan";
+			}
 			break;
 		case "smallMedium":
-			smallMediumVan = new createjs.Bitmap("images/furgoneta427x251.png");
-			smallMediumVan.image.onload = this.handleVanLoad;
-			smallMediumVan.name = "smallMediumVan";
+			if (this.smallMediumVan)
+			{
+				this.addBitmap(this.smallMediumVan);
+			}
+			else
+			{
+				this.smallMediumVan = new createjs.Bitmap("images/furgoneta427x251.png");
+				this.smallMediumVan.image.onload = this.handleVanLoad;
+				this.smallMediumVan.name = "smallMediumVan";
+			}
 			break;
 		case "medium":
-			mediumVan = new createjs.Bitmap("images/furgoneta569x335.png");
-			mediumVan.image.onload = this.handleVanLoad;
-			mediumVan.name = "mediumVan";
+			if (this.mediumVan)
+			{
+				this.addBitmap(this.mediumVan);
+			}
+			else
+			{
+				this.mediumVan = new createjs.Bitmap("images/furgoneta569x335.png");
+				this.mediumVan.image.onload = this.handleVanLoad;
+				this.mediumVan.name = "mediumVan";
+			}
 			break;
 		case "mediumBig":
-			mediumBigVan = new createjs.Bitmap("images/furgoneta740x436.png");
-			mediumBigVan.image.onload = this.handleVanLoad;
-			mediumBigVan.name = "mediumBigVan";
+			if (this.mediumBigVan)
+			{
+				this.addBitmap(this.mediumBigVan);
+			}
+			else
+			{
+				this.mediumBigVan = new createjs.Bitmap("images/furgoneta740x436.png");
+				this.mediumBigVan.image.onload = this.handleVanLoad;
+				this.mediumBigVan.name = "mediumBigVan";
+			}
 			break;
 		case "large":
-			bigVan = new createjs.Bitmap("images/furgoneta1138x670.png");
-			bigVan.image.onload = this.handleVanLoad;
-			bigVan.name = "bigVan";
+			if (this.bigVan)
+			{
+				this.addBitmap(this.bigVan);
+			}
+			else
+			{
+				this.bigVan = new createjs.Bitmap("images/furgoneta1138x670.png");
+				this.bigVan.image.onload = this.handleVanLoad;
+				this.bigVan.name = "bigVan";
+			}
 			break;
 	}
+} ;
+
+p.addBitmap = function (bitmap) {
+	this.addChild(bitmap);
+	this.resizeIcon(bitmap);
+	this.createWindows();
 } ;
 
 p.handleVanLoad = function (event) {
 	switch (size) {
 		case "small":
-			van.addChild(smallVan);
-			van.resizeIcon(smallVan);
+			van.addBitmap(van.smallVan);
 			break;
 		case "smallMedium":
-			van.addChild(smallMediumVan);
-			van.resizeIcon(smallMediumVan);
+			van.addBitmap(van.smallMediumVan);
 			break;
 		case "medium":
-			van.addChild(mediumVan);
-			van.resizeIcon(mediumVan);
+			van.addBitmap(van.mediumVan);
 			break;
 		case "mediumBig":
-			van.addChild(mediumBigVan);
-			van.resizeIcon(mediumBigVan);
+			van.addBitmap(van.mediumBigVan);
 			break;
 		case "large":
-			van.addChild(bigVan);
-			van.resizeIcon(bigVan);
+			van.addBitmap(van.bigVan);
 			break;
 	}
-	
-	van.createWindows();
 } ;
 
 p.createWindows = function () {		
 	this.createFacebook();
-	//this.createTwitter();
-	//this.createInstangram();
+	this.createTwitter();
+	this.createInstangram();
 	//this.createYoutube();
 } ;
 
@@ -101,41 +135,42 @@ p.createFacebook = function () {
 } ;
 
 p.createTwitter = function () {		
-	if (! twitter)
+	if (! this.twitter)
 	{
-		twitter = new Twitter(orientationStr, size); 
-		content.addChild(twitter);
+		this.twitter = new Twitter(orientationStr, size); 
 	}
 	else
 	{
-		twitter.removeAllChildren();
-		twitter.setup();
+		this.twitter.removeAllChildren();
+		this.twitter.setup();
 	}
+	
+	this.addChild(this.twitter);
 } ;
 
 p.createInstangram = function () {		
-	if (! instangram)
+	if (! this.instangram)
 	{
-		instangram = new Instangram(orientationStr, size); 
-		content.addChild(instangram);
+		this.instangram = new Instangram(orientationStr, size); 
 	}
 	else
 	{
-		instangram.removeAllChildren();
-		instangram.setup();
+		this.instangram.removeAllChildren();
+		this.instangram.setup();
 	}
+	
+	this.addChild(this.instangram);
 } ;
 
 p.createYoutube = function () {		
-	if (! youtube)
+	if (! this.youtube)
 	{
-		youtube = new Youtube(orientationStr, size); 
-		content.addChild(youtube);
+		this.youtube = new Youtube(orientationStr, size); 
 	}
 	else
 	{
-		youtube.removeAllChildren();
-		youtube.setup();
+		this.youtube.removeAllChildren();
+		this.youtube.setup();
 	}
 } ;
 
@@ -152,8 +187,6 @@ p.resizeIcon = function (bitmap) {
 		bitmap.y = 129.6;
 		bitmap.rotation = 9;
 	}
-
-	tick();
 } ;
 
 window.Van = createjs.promote(Van, "Container");

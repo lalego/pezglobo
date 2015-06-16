@@ -3,6 +3,8 @@
 function Instangram(orientationStr, size) {
 	this.Container_constructor();
 	
+	this.name = "instangram";
+	
 	this.smallInstangram = null;
 	this.smallMediumInstangram = null;
 	this.mediumInstangram = null;
@@ -19,50 +21,92 @@ var p = createjs.extend(Instangram, createjs.Container);
 
 p.setup = function() {
 	switch (size) {
-				case "small":
-					smallInstangram = new createjs.Bitmap("images/furgoneta285x168.png");
-					smallInstangram.image.onload = this.handleInstangramLoad;
-					break;
-				case "smallMedium":
-					smallMediumInstangram = new createjs.Bitmap("images/furgoneta427x251.png");
-					smallMediumInstangram.image.onload = this.handleInstangramLoad;
-					break;
-				case "medium":
-					mediumInstangram = new createjs.Bitmap("images/furgoneta569x335.png");
-					mediumInstangram.image.onload = this.handleInstangramLoad;
-					break;
-				case "mediumBig":
-					mediumBigInstangram = new createjs.Bitmap("images/furgoneta740x436.png");
-					mediumBigInstangram.image.onload = this.handleInstangramLoad;
-					break;
-				case "large":
-					bigInstangram = new createjs.Bitmap("images/furgoneta1138x670.png");
-					bigInstangram.image.onload = this.handleInstangramLoad;
-					break;
+		case "small":
+			if (this.smallInstangram)
+			{
+				this.addBitmap(this.smallInstangram, van.smallVan);
 			}
+			else
+			{
+				this.smallInstangram = new createjs.Bitmap("images/instangram34x26.png");
+				this.smallInstangram.image.onload = this.handleInstangramLoad;
+				this.smallInstangram.name = "smallInstangram";
+			}
+			break;
+		case "smallMedium":
+			if (this.smallMediumInstangram)
+			{
+				this.addBitmap(this.smallMediumInstangram, van.smallMediumVan);
+			}
+			else
+			{
+				this.smallMediumInstangram = new createjs.Bitmap("images/instangram50x38.png");
+				this.smallMediumInstangram.image.onload = this.handleInstangramLoad;
+				this.smallMediumInstangram.name = "smallMediumInstangram";
+			}
+			break;
+		case "medium":
+			if (this.mediumInstangram)
+			{
+				this.addBitmap(this.mediumInstangram, van.mediumVan);
+			}
+			else
+			{
+				this.mediumInstangram = new createjs.Bitmap("images/instangram67x51.png");
+				this.mediumInstangram.image.onload = this.handleInstangramLoad;
+				this.mediumInstangram.name = "mediumInstangram";
+			}
+			break;
+		case "mediumBig":
+			if (this.mediumBigInstangram)
+			{
+				this.addBitmap(this.mediumBigInstangram, van.mediumBigVan);
+			}
+			else
+			{
+				this.mediumBigInstangram = new createjs.Bitmap("images/instangram87x66.png");
+				this.mediumBigInstangram.image.onload = this.handleInstangramLoad;
+				this.mediumBigInstangram.name = "mediumBigInstangram";
+			}
+			break;
+		case "large":
+			if (this.bigInstangram)
+			{
+				this.addBitmap(this.bigInstangram, van.bigVan);
+			}
+			else
+			{
+				this.bigInstangram = new createjs.Bitmap("images/instangram134x102.png");
+				this.bigInstangram.image.onload = this.handleInstangramLoad;
+				this.bigInstangram.name = "bigInstangram";
+			}
+			break;
+	}
+} ;
+
+p.addBitmap = function (bitmap, bitmapVan) {
+	this.addChild(bitmap);
+	this.resizeIcon(bitmap, bitmapVan);
 } ;
 
 p.handleInstangramLoad = function (event) {
+	var instangram = van.getChildByName("instangram");
+	
 	switch (size) {
 		case "small":
-			instangram.addChild(smallInstangram);
-			instangram.resizeIcons();
+			instangram.addBitmap(instangram.smallInstangram, van.smallVan);
 			break;
 		case "smallMedium":
-			instangram.addChild(smallMediumInstangram);
-			instangram.resizeIcons();
+			instangram.addBitmap(instangram.smallMediumInstangram, van.smallMediumVan);
 			break;
 		case "medium":
-			instangram.addChild(mediumInstangram);
-			instangram.resizeIcons();
+			instangram.addBitmap(instangram.mediumInstangram, van.mediumVan);
 			break;
 		case "mediumBig":
-			instangram.addChild(mediumBigInstangram);
-			instangram.resizeIcons();
+			instangram.addBitmap(instangram.mediumBigInstangram, van.mediumBigVan);
 			break;
 		case "large":
-			instangram.addChild(bigInstangram);
-			instangram.resizeIcons();
+			instangram.addBitmap(instangram.bigInstangram, van.bigVan);
 			break;
 	}
 } ;
@@ -87,46 +131,19 @@ p.resizeIcons = function () {
 	}
 } ;
 
-p.resizeIcon = function (bitmap, horizontalWidth, horizontalHeight, verticalWidth, verticalHeight) {		
-	var bitmapWidth = 91;
-	var bitmapHeight = 70;
-	var screenWidth = window.innerWidth;
-	var screenHeight = window.innerHeight;
-	var scaleX = screenWidth / bitmapWidth;
-	var scaleY = screenHeight / bitmapHeight;
-	bitmap.scaleX = scale;
-	bitmap.scaleY = scale;
-	
+p.resizeIcon = function (bitmap, bitmapVan) {
 	if(orientationStr == 'Landscape')
 	{
-		var scaledX = (calculatedWidth * horizontalWidth/100) * scale;
-		var scaledY = (calculatedHeight * horizontalHeight/100) * scale;
-		
-		var recalculatedWidth = calculatedWidth + centerX/2;
-		var recalculatedHeight = calculatedHeight + centerY/2;
-		
-		var totalX = (calculatedWidth * horizontalWidth/100);
-		var totalY = (calculatedHeight * horizontalHeight/100);
-		
-		var recalculatedWidth = totalX + centerX;
-		var recalculatedHeight = totalY + centerY;
-		
-		//var prX = 670;
-		//var prY = 530;
-		var prX = 670;
-		var prY = 530;
-		
-		bitmap.x = totalX;
-		bitmap.y = totalY;
+		bitmap.x = bitmapVan.x + 337.8;
+		bitmap.y = bitmapVan.y + 112.5;
 		bitmap.rotation = 0;
 	}
 	else
 	{
-		bitmap.x = (calculatedWidth * verticalWidth/100) * scale; //276
-		bitmap.y = (calculatedHeight * verticalHeight/100) * scale; //281
+		bitmap.x = bitmapVan.x + 148;
+		bitmap.y = bitmapVan.y + 130;
 		bitmap.rotation = 9;
 	}
-
 }
 
 p.changeVertical = function () {

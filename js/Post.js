@@ -20,49 +20,89 @@ var p = createjs.extend(Post, createjs.Container);
 p.setup = function() {
 	switch (size) {
 		case "small":
-			smallPost = new createjs.Bitmap("images/postepez86x230.png");
-			smallPost.image.onload = this.handlePostLoad;
+			if (this.smallPost)
+			{
+				this.addBitmap(this.smallPost);
+			}
+			else
+			{
+				this.smallPost = new createjs.Bitmap("images/postepez86x230.png");
+				this.smallPost.image.onload = this.handlePostLoad;
+				this.smallPost.name = "smallPost";
+			}
 			break;
 		case "smallMedium":
-			smallMediumPost = new createjs.Bitmap("images/postepez128x342.png");
-			smallMediumPost.image.onload = this.handlePostLoad;
+			if (this.smallMediumPost)
+			{
+				this.addBitmap(this.smallMediumPost);
+			}
+			else
+			{
+				this.smallMediumPost = new createjs.Bitmap("images/postepez128x342.png");
+				this.smallMediumPost.image.onload = this.handlePostLoad;
+				this.smallMediumPost.name = "smallMediumPost";
+			}
 			break;
 		case "medium":
-			mediumPost = new createjs.Bitmap("images/postepez171x457.png");
-			mediumPost.image.onload = this.handlePostLoad;
+			if (this.mediumPost)
+			{
+				this.addBitmap(this.mediumPost);
+			}
+			else
+			{
+				this.mediumPost = new createjs.Bitmap("images/postepez171x457.png");
+				this.mediumPost.image.onload = this.handlePostLoad;
+				this.mediumPost.name = "mediumPost";
+			}
 			break;
 		case "mediumBig":
-			mediumBigPost = new createjs.Bitmap("images/postepez222x593.png");
-			mediumBigPost.image.onload = this.handlePostLoad;
+			if (this.mediumBigPost)
+			{
+				this.addBitmap(this.mediumBigPost);
+			}
+			else
+			{
+				this.mediumBigPost = new createjs.Bitmap("images/postepez222x593.png");
+				this.mediumBigPost.image.onload = this.handlePostLoad;
+				this.mediumBigPost.name = "mediumBigPost";
+			}
 			break;
 		case "large":
-			bigPost = new createjs.Bitmap("images/postepez342x914.png");
-			bigPost.image.onload = this.handlePostLoad;
+			if (this.bigPost)
+			{
+				this.addBitmap(this.bigPost);
+			}
+			else
+			{
+				this.bigPost = new createjs.Bitmap("images/postepez342x914.png");
+				this.bigPost.image.onload = this.handlePostLoad;
+				this.bigPost.name = "bigPost";
+			}
 			break;
 	}
+} ;
+
+p.addBitmap = function (bitmap) {
+	this.addChild(bitmap);
+	this.resizeIcon(bitmap);
 } ;
 
 p.handlePostLoad = function (event) {
 	switch (size) {
 		case "small":
-			post.addChild(smallPost);
-			post.resizeIcon(smallPost);
+			post.addBitmap(post.smallPost);
 			break;
 		case "smallMedium":
-			post.addChild(smallMediumPost);
-			post.resizeIcon(smallMediumPost);
+			post.addBitmap(post.smallMediumPost);
 			break;
 		case "medium":
-			post.addChild(mediumPost);
-			post.resizeIcon(mediumPost);
+			post.addBitmap(post.mediumPost);
 			break;
 		case "mediumBig":
-			post.addChild(mediumBigPost);
-			post.resizeIcon(mediumBigPost);
+			post.addBitmap(post.mediumBigPost);
 			break;
 		case "large":
-			post.addChild(bigPost);
-			post.resizeIcon(bigPost);
+			post.addBitmap(post.bigPost);
 			break;
 	}
 } ;
@@ -79,14 +119,6 @@ p.resizeIcon = function (bitmap) {
 		bitmap.y = 503;
 	}
 
-}
-
-p.changeVertical = function () {
-	
-}
-
-p.changeContainer = function (post) {		
-	
 }
 
 window.Post = createjs.promote(Post, "Container");
