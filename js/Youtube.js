@@ -114,8 +114,8 @@ p.handleYoutubeLoad = function (event) {
 p.resizeIcon = function (bitmap, bitmapVan) {
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = bitmapVan.x + 337.8;
-		bitmap.y = bitmapVan.y + 112.5;
+		bitmap.x = bitmapVan.x + 423.9;
+		bitmap.y = bitmapVan.y + 111;
 		bitmap.rotation = 0;
 	}
 	else

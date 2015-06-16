@@ -172,6 +172,8 @@ p.createYoutube = function () {
 		this.youtube.removeAllChildren();
 		this.youtube.setup();
 	}
+	
+	this.addChild(this.youtube);
 } ;
 
 p.resizeIcon = function (bitmap) {		
