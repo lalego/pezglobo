@@ -117,7 +117,7 @@ p.createWindows = function () {
 	this.createFacebook();
 	this.createTwitter();
 	this.createInstangram();
-	//this.createYoutube();
+	this.createYoutube();
 } ;
 
 p.createFacebook = function () {		

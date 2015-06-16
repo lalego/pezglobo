@@ -3,6 +3,8 @@
 function Youtube(orientationStr, size) {
 	this.Container_constructor();
 	
+	this.name = "youtube";
+	
 	this.smallYoutube = null;
 	this.smallMediumYoutube = null;
 	this.mediumYoutube = null;
@@ -19,115 +21,110 @@ var p = createjs.extend(Youtube, createjs.Container);
 
 p.setup = function() {
 	switch (size) {
-				case "small":
-					smallYoutube = new createjs.Bitmap("images/furgoneta285x168.png");
-					smallYoutube.image.onload = this.handleYoutubeLoad;
-					break;
-				case "smallMedium":
-					smallMediumYoutube = new createjs.Bitmap("images/furgoneta427x251.png");
-					smallMediumYoutube.image.onload = this.handleYoutubeLoad;
-					break;
-				case "medium":
-					mediumYoutube = new createjs.Bitmap("images/furgoneta569x335.png");
-					mediumYoutube.image.onload = this.handleYoutubeLoad;
-					break;
-				case "mediumBig":
-					mediumBigYoutube = new createjs.Bitmap("images/furgoneta740x436.png");
-					mediumBigYoutube.image.onload = this.handleYoutubeLoad;
-					break;
-				case "large":
-					bigYoutube = new createjs.Bitmap("images/furgoneta1138x670.png");
-					bigYoutube.image.onload = this.handleYoutubeLoad;
-					break;
+		case "small":
+			if (this.smallYoutube)
+			{
+				this.addBitmap(this.smallYoutube, van.smallVan);
 			}
+			else
+			{
+				this.smallYoutube = new createjs.Bitmap("images/youtube35x27.png");
+				this.smallYoutube.image.onload = this.handleYoutubeLoad;
+				this.smallYoutube.name = "smallYoutube";
+			}
+			break;
+		case "smallMedium":
+			if (this.smallMediumYoutube)
+			{
+				this.addBitmap(this.smallMediumYoutube, van.smallMediumVan);
+			}
+			else
+			{
+				this.smallMediumYoutube = new createjs.Bitmap("images/youtube52x41.png");
+				this.smallMediumYoutube.image.onload = this.handleYoutubeLoad;
+				this.smallMediumYoutube.name = "smallMediumYoutube";
+			}
+			break;
+		case "medium":
+			if (this.mediumYoutube)
+			{
+				this.addBitmap(this.mediumYoutube, van.mediumVan);
+			}
+			else
+			{
+				this.mediumYoutube = new createjs.Bitmap("images/youtube69x54.png");
+				this.mediumYoutube.image.onload = this.handleYoutubeLoad;
+				this.mediumYoutube.name = "mediumYoutube";
+			}
+			break;
+		case "mediumBig":
+			if (this.mediumBigYoutube)
+			{
+				this.addBitmap(this.mediumBigYoutube, van.mediumBigVan);
+			}
+			else
+			{
+				this.mediumBigYoutube = new createjs.Bitmap("images/youtube90x70.png");
+				this.mediumBigYoutube.image.onload = this.handleYoutubeLoad;
+				this.mediumBigYoutube.name = "mediumBigYoutube";
+			}
+			break;
+		case "large":
+			if (this.bigYoutube)
+			{
+				this.addBitmap(this.bigYoutube, van.bigVan);
+			}
+			else
+			{
+				this.bigYoutube = new createjs.Bitmap("images/youtube138x108.png");
+				this.bigYoutube.image.onload = this.handleYoutubeLoad;
+				this.bigYoutube.name = "bigYoutube";
+			}
+			break;
+	}
+} ;
+
+p.addBitmap = function (bitmap, bitmapVan) {
+	this.addChild(bitmap);
+	this.resizeIcon(bitmap, bitmapVan);
 } ;
 
 p.handleYoutubeLoad = function (event) {
-	switch (size) {
-		case "small":
-			youtube.addChild(smallYoutube);
-			youtube.resizeIcons();
-			break;
-		case "smallMedium":
-			youtube.addChild(smallMediumYoutube);
-			youtube.resizeIcons();
-			break;
-		case "medium":
-			youtube.addChild(mediumYoutube);
-			youtube.resizeIcons();
-			break;
-		case "mediumBig":
-			youtube.addChild(mediumBigYoutube);
-			youtube.resizeIcons();
-			break;
-		case "large":
-			youtube.addChild(bigYoutube);
-			youtube.resizeIcons();
-			break;
-	}
-} ;
-
-p.resizeIcons = function () {
-	switch (size) {
-		case "small":
-			this.resizeIcon(this.smallYoutube, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "smallMedium":
-			this.resizeIcon(smallMediumYoutube, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "medium":
-			this.resizeIcon(this.mediumYoutube, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "mediumBig":
-			this.resizeIcon(this.mediumBigYoutube, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "large":
-			this.resizeIcon(this.bigYoutube, 53.9, 64.2, 43.1, 29.3);
-			break;
-	}
-} ;
-
-p.resizeIcon = function (bitmap, horizontalWidth, horizontalHeight, verticalWidth, verticalHeight) {		
-	var bitmapWidth = 91;
-	var bitmapHeight = 70;
-	var screenWidth = window.innerWidth;
-	var screenHeight = window.innerHeight;
-	var scaleX = screenWidth / bitmapWidth;
-	var scaleY = screenHeight / bitmapHeight;
-	bitmap.scaleX = scale;
-	bitmap.scaleY = scale;
+	var youtube = van.getChildByName("youtube");
 	
+	switch (size) {
+		case "small":
+			youtube.addBitmap(youtube.smallYoutube, van.smallVan);
+			break;
+		case "smallMedium":
+			youtube.addBitmap(youtube.smallMediumYoutube, van.smallMediumVan);
+			break;
+		case "medium":
+			youtube.addBitmap(youtube.mediumYoutube, van.mediumVan);
+			break;
+		case "mediumBig":
+			youtube.addBitmap(youtube.mediumBigYoutube, van.mediumBigVan);
+			break;
+		case "large":
+			youtube.addBitmap(youtube.bigYoutube, van.bigVan);
+			break;
+	}
+} ;
+
+p.resizeIcon = function (bitmap, bitmapVan) {
 	if(orientationStr == 'Landscape')
 	{
-		var scaledX = (calculatedWidth * horizontalWidth/100) * scale;
-		var scaledY = (calculatedHeight * horizontalHeight/100) * scale;
-		
-		var recalculatedWidth = calculatedWidth + centerX/2;
-		var recalculatedHeight = calculatedHeight + centerY/2;
-		
-		var totalX = (calculatedWidth * horizontalWidth/100);
-		var totalY = (calculatedHeight * horizontalHeight/100);
-		
-		var recalculatedWidth = totalX + centerX;
-		var recalculatedHeight = totalY + centerY;
-		
-		//var prX = 670;
-		//var prY = 530;
-		var prX = 670;
-		var prY = 530;
-		
-		bitmap.x = totalX;
-		bitmap.y = totalY;
+		bitmap.x = bitmapVan.x + 337.8;
+		bitmap.y = bitmapVan.y + 112.5;
 		bitmap.rotation = 0;
 	}
 	else
 	{
-		bitmap.x = (calculatedWidth * verticalWidth/100) * scale; //276
-		bitmap.y = (calculatedHeight * verticalHeight/100) * scale; //281
+		bitmap.x = bitmapVan.x + 148;
+		bitmap.y = bitmapVan.y + 130;
 		bitmap.rotation = 9;
 	}
-
-}
+} ;
 
 p.changeVertical = function () {
 	

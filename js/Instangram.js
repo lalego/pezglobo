@@ -111,26 +111,6 @@ p.handleInstangramLoad = function (event) {
 	}
 } ;
 
-p.resizeIcons = function () {
-	switch (size) {
-		case "small":
-			this.resizeIcon(this.smallInstangram, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "smallMedium":
-			this.resizeIcon(smallMediumInstangram, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "medium":
-			this.resizeIcon(this.mediumInstangram, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "mediumBig":
-			this.resizeIcon(this.mediumBigInstangram, 53.9, 64.2, 43.1, 29.3);
-			break;
-		case "large":
-			this.resizeIcon(this.bigInstangram, 53.9, 64.2, 43.1, 29.3);
-			break;
-	}
-} ;
-
 p.resizeIcon = function (bitmap, bitmapVan) {
 	if(orientationStr == 'Landscape')
 	{
@@ -144,7 +124,7 @@ p.resizeIcon = function (bitmap, bitmapVan) {
 		bitmap.y = bitmapVan.y + 130;
 		bitmap.rotation = 9;
 	}
-}
+} ;
 
 p.changeVertical = function () {
 	

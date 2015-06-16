@@ -124,7 +124,7 @@ p.resizeIcon = function (bitmap, bitmapVan) {
 		bitmap.y = bitmapVan.y + 130;
 		bitmap.rotation = 9;
 	}
-}
+} ;
 
 p.changeVertical = function () {
 	
