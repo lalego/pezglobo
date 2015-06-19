@@ -114,14 +114,14 @@ p.handleSkullLoad = function (event) {
 p.resizeIcon = function (bitmap, bitmapVan) {
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = bitmapVan.x + 290;
-		bitmap.y = bitmapVan.y + 181;
+		bitmap.x = bitmapVan.x + (50.97 * bitmapVan.image.width/100);
+		bitmap.y = bitmapVan.y + (54.03 * bitmapVan.image.height/100);
 		bitmap.rotation = 0;
 	}
 	else
 	{
-		bitmap.x = bitmapVan.x + 148;
-		bitmap.y = bitmapVan.y + 130;
+		bitmap.x = bitmapVan.x + (45 * bitmapVan.image.width/100);
+		bitmap.y = bitmapVan.y + (65.67 * bitmapVan.image.height/100);
 		bitmap.rotation = 9;
 	}
 } ;

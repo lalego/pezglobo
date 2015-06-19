@@ -110,15 +110,14 @@ p.handlePostLoad = function (event) {
 p.resizeIcon = function (bitmap) {		
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = 86;
-		bitmap.y = 220;
+		bitmap.x = 8.96 * calculatedWidth/100;
+		bitmap.y = 34.37 * calculatedHeight/100;
 	}
 	else
 	{
-		bitmap.x = 18;
-		bitmap.y = 503;
+		bitmap.x = 1.88 * calculatedWidth/100;
+		bitmap.y = 78.60 * calculatedHeight/100;
 	}
-
 }
 
 window.Post = createjs.promote(Post, "Container");

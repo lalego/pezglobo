@@ -114,14 +114,14 @@ p.handleInstangramLoad = function (event) {
 p.resizeIcon = function (bitmap, bitmapVan) {
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = bitmapVan.x + 337.8;
-		bitmap.y = bitmapVan.y + 112.5;
+		bitmap.x = bitmapVan.x + (59.23 * bitmapVan.image.width/100);
+		bitmap.y = bitmapVan.y + (33.43 * bitmapVan.image.height/100);
 		bitmap.rotation = 0;
 	}
 	else
 	{
-		bitmap.x = bitmapVan.x + 148;
-		bitmap.y = bitmapVan.y + 130;
+		bitmap.x = bitmapVan.x + (55.6 * bitmapVan.image.width/100);
+		bitmap.y = bitmapVan.y + (48.36 * bitmapVan.image.height/100);
 		bitmap.rotation = 9;
 	}
 } ;

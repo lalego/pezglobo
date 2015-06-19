@@ -114,14 +114,14 @@ p.handleFacebookLoad = function (event) {
 p.resizeIcon = function (bitmap, bitmapVan) {
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = bitmapVan.x + 168;
-		bitmap.y = bitmapVan.y + 106;
+		bitmap.x = bitmapVan.x + (29.53 * bitmapVan.image.width/100);
+		bitmap.y = bitmapVan.y + (31.64 * bitmapVan.image.height/100);
 		bitmap.rotation = 0;
 	}
 	else
 	{
-		bitmap.x = bitmapVan.x + 148;
-		bitmap.y = bitmapVan.y + 130;
+		bitmap.x = bitmapVan.x + (26 * bitmapVan.image.width/100);
+		bitmap.y = bitmapVan.y + (38.80 * bitmapVan.image.height/100);
 		bitmap.rotation = 9;
 	}
 } ;

@@ -94,7 +94,7 @@ p.handleTwitterLoad = function (event) {
 	
 	switch (size) {
 		case "small":
-			twitter.addBitmap(twitter.smallFacebook, van.smallVan);
+			twitter.addBitmap(twitter.smallTwitter, van.smallVan);
 			break;
 		case "smallMedium":
 			twitter.addBitmap(twitter.smallMediumTwitter, van.smallMediumVan);
@@ -114,14 +114,14 @@ p.handleTwitterLoad = function (event) {
 p.resizeIcon = function (bitmap, bitmapVan) {		
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = bitmapVan.x + 254;
-		bitmap.y = bitmapVan.y + 107;
+		bitmap.x = bitmapVan.x + (44.64 * bitmapVan.image.width/100);
+		bitmap.y = bitmapVan.y + (31.94 * bitmapVan.image.height/100);
 		bitmap.rotation = 0;
 	}
 	else
 	{
-		bitmap.x = bitmapVan.x + 148;
-		bitmap.y = bitmapVan.y + 130;
+		bitmap.x = bitmapVan.x + (41.12 * bitmapVan.image.width/100);
+		bitmap.y = bitmapVan.y + (43.28 * bitmapVan.image.height/100);
 		bitmap.rotation = 9;
 	}
 }

@@ -114,14 +114,14 @@ p.handleYoutubeLoad = function (event) {
 p.resizeIcon = function (bitmap, bitmapVan) {
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = bitmapVan.x + 423.9;
-		bitmap.y = bitmapVan.y + 111;
+		bitmap.x = bitmapVan.x + (74.50 * bitmapVan.image.width/100);
+		bitmap.y = bitmapVan.y + (33.13 * bitmapVan.image.height/100);
 		bitmap.rotation = 0;
 	}
 	else
 	{
-		bitmap.x = bitmapVan.x + 148;
-		bitmap.y = bitmapVan.y + 130;
+		bitmap.x = bitmapVan.x + 402;
+		bitmap.y = bitmapVan.y + 176;
 		bitmap.rotation = 9;
 	}
 } ;

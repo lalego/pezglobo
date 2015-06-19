@@ -29,7 +29,7 @@
 	<script>
 		var stage, content;
 		var bg, van, sun, post;
-		var calculatedWidth,calculatedHeight,centerWidth,centerHeight;
+		var calculatedWidth, calculatedHeight, centerX, centerY, screenWidth, screenHeight;
 		var scale;
 		var orientationStr, size;
 
@@ -194,16 +194,15 @@
 		function resizeContent() 
 		{
 			var totalWidth = document.documentElement.clientWidth;
-			var screenWidth = window.innerWidth;
-			var screenHeight = window.innerHeight;
+			screenWidth = window.innerWidth;
+			screenHeight = window.innerHeight;
 			
 			if (screenWidth < totalWidth)
 			{
 				screenWidth = document.documentElement.clientWidth;
 				screenHeight = document.documentElement.clientHeight;
 			}
-
-			//scale = screenWidth / calculatedWidth;
+			
 			var scaleX = screenWidth / calculatedWidth;
 			var scaleY = screenHeight / calculatedHeight;
 			console.log("scaleX: " + scaleX);
@@ -234,6 +233,8 @@
 			
 			stage.canvas.width = imageWidth;
 			stage.canvas.height = imageHeight;
+			
+			tick();
 		}
 		
 		function resize(event) 

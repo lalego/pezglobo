@@ -110,18 +110,17 @@ p.handleSunLoad = function (event) {
 p.resizeIcon = function (bitmap) {		
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = 837;
+		bitmap.x = 87.19 * calculatedWidth/100;
 		bitmap.y = 0;
 		bitmap.scaleX = 1;
 	}
 	else
 	{
-		bitmap.x = 62;
+		bitmap.x = 6.56 * calculatedWidth/100;
 		bitmap.y = 0;
 		bitmap.scaleX = -1;
 	}
-
-}
+} ;
 
 window.Sun = createjs.promote(Sun, "Container");
 }());

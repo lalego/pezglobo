@@ -195,14 +195,14 @@ p.createSkull = function () {
 p.resizeIcon = function (bitmap) {		
 	if(orientationStr == 'Landscape')
 	{
-		bitmap.x = 349.8;
-		bitmap.y = 304.9;
+		bitmap.x = 36.5 * calculatedWidth/100;
+		bitmap.y = 47.64 * calculatedHeight/100;
 		bitmap.rotation = 0;
 	}
 	else
 	{
-		bitmap.x = 49.3;
-		bitmap.y = 129.6;
+		bitmap.x = 6.86 * calculatedWidth/100;
+		bitmap.y = 13.5 * calculatedHeight/100;
 		bitmap.rotation = 9;
 	}
 } ;
