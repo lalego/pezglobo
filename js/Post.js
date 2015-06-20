@@ -120,7 +120,7 @@ p.resizeIcon = function (bitmap) {
 	else
 	{
 		bitmap.x = 1.88 * calculatedWidth/100;
-		bitmap.y = 78.60 * calculatedHeight/100;
+		bitmap.y = 60.60 * calculatedHeight/100;
 	}
 	
 	this.unfloatX = bitmap.x;

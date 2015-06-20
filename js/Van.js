@@ -207,7 +207,7 @@ p.resizeIcon = function (bitmap) {
 	}
 	else
 	{
-		bitmap.x = 6.86 * calculatedWidth/100;
+		bitmap.x = 12 * calculatedWidth/100;
 		bitmap.y = 13.5 * calculatedHeight/100;
 		bitmap.rotation = 9;
 	}
@@ -219,8 +219,8 @@ p.resizeIcon = function (bitmap) {
 } ;
 
 p.floatIcon = function () {
-	/*var bitmap = this.getChildAt(0);
-	var newHeight = screenHeight - imageHeight; 
+	var bitmap = this.getChildAt(0);
+	/*var newHeight = screenHeight - imageHeight; 
 	var newHeight2 = this.unfloatY + centerY/2; 
 	var newHeight3 = imageHeight - this.unfloatY; */
 	if(orientationStr == 'Landscape')
@@ -232,6 +232,46 @@ p.floatIcon = function () {
 		/*bitmap.x = 6.86 * calculatedWidth/100;
 		bitmap.y = 13.5 * calculatedHeight/100;
 		bitmap.rotation = 9;*/
+	}
+	
+	this.floatWindows();
+} ;
+
+p.floatWindows = function () {
+	var bitmap = this.getChildAt(0);
+	if (this.facebook)
+	{
+		var facebookBitmap = this.facebook.getChildAt(0);
+		var facebookOverBitmap = this.facebook.getChildAt(1);
+		this.facebook.resizeIcon(facebookBitmap, facebookOverBitmap, bitmap);
+	}
+	
+	if (this.twitter)
+	{
+		var twitterBitmap = this.twitter.getChildAt(0);
+		var twitterOverBitmap = this.twitter.getChildAt(0);
+		this.twitter.resizeIcon(twitterBitmap, twitterOverBitmap, bitmap);
+	}
+	
+	if (this.instangram)
+	{
+		var instangramBitmap = this.instangram.getChildAt(0);
+		var instangramOverBitmap = this.instangram.getChildAt(0);
+		this.instangram.resizeIcon(instangramBitmap, instangramOverBitmap, bitmap);
+	}
+	
+	if (this.youtube)
+	{
+		var youtubeBitmap = this.youtube.getChildAt(0);
+		var youtubeOverBitmap = this.youtube.getChildAt(0);
+		this.youtube.resizeIcon(youtubeBitmap, youtubeOverBitmap, bitmap);
+	}
+	
+	if (this.skull)
+	{
+		var skullBitmap = this.skull.getChildAt(0);
+		var skullOverBitmap = this.skull.getChildAt(0);
+		this.skull.resizeIcon(skullBitmap, skullOverBitmap, bitmap);
 	}
 } ;
 

@@ -25,10 +25,13 @@
 	<script src="js/Skull.js"></script>
 	<script src="js/Sun.js"></script>
 	<script src="js/Post.js"></script>
+	<script src="js/Address.js"></script>
+	<script src="js/Poster.js"></script>
+	<script src="js/Rrd.js"></script>
 
 	<script>
 		var stage, content;
-		var bg, van, sun, post;
+		var bg, van, sun, post, address, poster, rrd;
 		var calculatedWidth, calculatedHeight, centerX, centerY, screenWidth, screenHeight;
 		var scale;
 		var orientationStr, size;
@@ -144,6 +147,9 @@
 			createVan();
 			createSun();
 			createPost();
+			createAddress();
+			createPoster();
+			createRrd();
 		}
 		
 		function createVan() 
@@ -187,6 +193,51 @@
 			{
 				post.removeAllChildren();
 				post.setup();
+			}
+			
+		}
+		
+		function createAddress() 
+		{
+			if (! address)
+			{
+				address = new Address(orientationStr, size); 
+				content.addChild(address);
+			}
+			else
+			{
+				address.removeAllChildren();
+				address.setup();
+			}
+			
+		}
+		
+		function createPoster() 
+		{
+			if (! poster)
+			{
+				poster = new Poster(orientationStr, size); 
+				content.addChild(poster);
+			}
+			else
+			{
+				poster.removeAllChildren();
+				poster.setup();
+			}
+			
+		}
+		
+		function createRrd() 
+		{
+			if (! rrd)
+			{
+				rrd = new Rrd(orientationStr, size); 
+				content.addChild(rrd);
+			}
+			else
+			{
+				rrd.removeAllChildren();
+				rrd.setup();
 			}
 			
 		}
