@@ -15,6 +15,11 @@ function Van(orientationStr, size) {
 	this.youtube = null;
 	this.skull = null;
 	
+	this.unfloatY = null;
+	this.unfloatX = null;
+	
+	this.bottom = null;
+	
 	this.orientationStr = orientationStr;
 	this.size = size;
 	
@@ -91,6 +96,7 @@ p.setup = function() {
 p.addBitmap = function (bitmap) {
 	this.addChild(bitmap);
 	this.resizeIcon(bitmap);
+	this.floatIcon();
 	this.createWindows();
 } ;
 
@@ -192,7 +198,7 @@ p.createSkull = function () {
 	this.addChild(this.skull);
 } ;
 
-p.resizeIcon = function (bitmap) {		
+p.resizeIcon = function (bitmap) {
 	if(orientationStr == 'Landscape')
 	{
 		bitmap.x = 36.5 * calculatedWidth/100;
@@ -204,6 +210,28 @@ p.resizeIcon = function (bitmap) {
 		bitmap.x = 6.86 * calculatedWidth/100;
 		bitmap.y = 13.5 * calculatedHeight/100;
 		bitmap.rotation = 9;
+	}
+	
+	this.unfloatX = bitmap.x;
+	this.unfloatY = bitmap.y;
+	
+	this.bottom = calculatedHeight - bitmap.y;
+} ;
+
+p.floatIcon = function () {
+	/*var bitmap = this.getChildAt(0);
+	var newHeight = screenHeight - imageHeight; 
+	var newHeight2 = this.unfloatY + centerY/2; 
+	var newHeight3 = imageHeight - this.unfloatY; */
+	if(orientationStr == 'Landscape')
+	{
+		bitmap.y = this.unfloatY + centerY/2;
+	}
+	else
+	{
+		/*bitmap.x = 6.86 * calculatedWidth/100;
+		bitmap.y = 13.5 * calculatedHeight/100;
+		bitmap.rotation = 9;*/
 	}
 } ;
 

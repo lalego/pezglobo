@@ -12,6 +12,9 @@ function Sun(orientationStr, size) {
 	this.orientationStr = orientationStr;
 	this.size = size;
 	
+	this.unfloatY = null;
+	this.unfloatX = null;
+	
 	this.setup();
 }
 var p = createjs.extend(Sun, createjs.Container);
@@ -85,6 +88,7 @@ p.setup = function() {
 p.addBitmap = function (bitmap) {
 	this.addChild(bitmap);
 	this.resizeIcon(bitmap);
+	this.floatIcon();
 } ;
 
 p.handleSunLoad = function (event) {
@@ -119,6 +123,25 @@ p.resizeIcon = function (bitmap) {
 		bitmap.x = 6.56 * calculatedWidth/100;
 		bitmap.y = 0;
 		bitmap.scaleX = -1;
+	}
+	
+	this.unfloatX = bitmap.x;
+	this.unfloatY = bitmap.y;
+} ;
+
+p.floatIcon = function () {
+	var bitmap = this.getChildAt(0);
+	var newHeight = screenHeight - calculatedHeight; 
+	if(orientationStr == 'Landscape')
+	{
+		//bitmap.y = bitmap.y + centerY;
+	}
+	else
+	{
+		bitmap.x = this.unfloatX - centerX;
+		/*bitmap.x = 6.86 * calculatedWidth/100;
+		bitmap.y = 13.5 * calculatedHeight/100;
+		bitmap.rotation = 9;*/
 	}
 } ;
 

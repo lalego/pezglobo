@@ -12,6 +12,9 @@ function Post(orientationStr, size) {
 	this.orientationStr = orientationStr;
 	this.size = size;
 	
+	this.unfloatY = null;
+	this.unfloatX = null;
+	
 	this.setup();
 }
 var p = createjs.extend(Post, createjs.Container);
@@ -85,6 +88,7 @@ p.setup = function() {
 p.addBitmap = function (bitmap) {
 	this.addChild(bitmap);
 	this.resizeIcon(bitmap);
+	this.floatIcon();
 } ;
 
 p.handlePostLoad = function (event) {
@@ -118,7 +122,26 @@ p.resizeIcon = function (bitmap) {
 		bitmap.x = 1.88 * calculatedWidth/100;
 		bitmap.y = 78.60 * calculatedHeight/100;
 	}
+	
+	this.unfloatX = bitmap.x;
+	this.unfloatY = bitmap.y;
 }
+
+p.floatIcon = function () {
+	var bitmap = this.getChildAt(0);
+	var newHeight = screenHeight - calculatedHeight; 
+	if(orientationStr == 'Landscape')
+	{
+		//bitmap.y = bitmap.y + centerY;
+	}
+	else
+	{
+		bitmap.y = this.unfloatY + centerX;
+		/*bitmap.x = 6.86 * calculatedWidth/100;
+		bitmap.y = 13.5 * calculatedHeight/100;
+		bitmap.rotation = 9;*/
+	}
+} ;
 
 window.Post = createjs.promote(Post, "Container");
 }());
