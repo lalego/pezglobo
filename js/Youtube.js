@@ -148,6 +148,7 @@ p.resizeIcon = function (bitmap, bitmapOver, bitmapVan) {
 
 p.createButton = function (bitmap, bitmapOver) {
 	bitmap.addEventListener("mouseover", this.handleMouseover);
+	bitmap.addEventListener("mousedown", this.handleMousedown);
 	bitmapOver.addEventListener("mouseout", this.handleMouseout);
 	bitmapOver.addEventListener("mousedown", this.handleMousedown);
 } ;
