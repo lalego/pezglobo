@@ -249,29 +249,28 @@ p.floatWindows = function () {
 	if (this.twitter)
 	{
 		var twitterBitmap = this.twitter.getChildAt(0);
-		var twitterOverBitmap = this.twitter.getChildAt(0);
+		var twitterOverBitmap = this.twitter.getChildAt(1);
 		this.twitter.resizeIcon(twitterBitmap, twitterOverBitmap, bitmap);
 	}
 	
 	if (this.instangram)
 	{
 		var instangramBitmap = this.instangram.getChildAt(0);
-		var instangramOverBitmap = this.instangram.getChildAt(0);
+		var instangramOverBitmap = this.instangram.getChildAt(1);
 		this.instangram.resizeIcon(instangramBitmap, instangramOverBitmap, bitmap);
 	}
 	
 	if (this.youtube)
 	{
 		var youtubeBitmap = this.youtube.getChildAt(0);
-		var youtubeOverBitmap = this.youtube.getChildAt(0);
+		var youtubeOverBitmap = this.youtube.getChildAt(1);
 		this.youtube.resizeIcon(youtubeBitmap, youtubeOverBitmap, bitmap);
 	}
 	
 	if (this.skull)
 	{
 		var skullBitmap = this.skull.getChildAt(0);
-		var skullOverBitmap = this.skull.getChildAt(0);
-		this.skull.resizeIcon(skullBitmap, skullOverBitmap, bitmap);
+		this.skull.resizeIcon(skullBitmap, bitmap);
 	}
 } ;
 
