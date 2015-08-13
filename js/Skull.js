@@ -155,7 +155,7 @@ p.runTween = function (bitmap) {
 	if (!playing)
 	{
 		console.log("no playing");
-		createjs.Tween.get(bitmap,{override: true}).to({rotation:360}, 2000).call(this.handleComplete);	
+		createjs.Tween.get(bitmap,{override: true}).to({rotation:360}, 1000).call(this.handleComplete);	
 	}	
 	else
 	{
