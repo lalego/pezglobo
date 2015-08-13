@@ -305,16 +305,22 @@
 				console.log("cambio orientacion");
 				
 				change();
+				resizeContent();
+				floatIcons();
 			}
 			else if (size != lastSize)
 			{
 				console.log("cambio tamaño");
 				
 				change();
+				resizeContent();
+				floatIcons();
 			}
-
-			resizeContent();
-			floatIcons();
+			else
+			{
+				resizeContent();
+				floatIcons();
+			}
 		}
 		
 		function change() 
